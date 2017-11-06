@@ -1,0 +1,4 @@
+# Appveyor should automatically detect NUnit 3 and run the tests.
+# For configuration options, visit: https://www.appveyor.com/docs/running-tests
+before_build:
+  - nuget restore
