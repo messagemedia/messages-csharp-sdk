@@ -1,0 +1,28 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageMediaMessages.PCL", "MessageMediaMessages.PCL/MessageMediaMessages.PCL.csproj", "{aecfc1c1-e357-4806-8d0f-42db80aaeed3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageMediaMessages.Tests", "MessageMediaMessages.Tests/MessageMediaMessages.Tests.csproj", "{9ef0c641-b526-4481-8e12-ad9a0d0680df}"
+EndProject
+Global
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|Any CPU = Debug|Any CPU
+        Release|Any CPU = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        {aecfc1c1-e357-4806-8d0f-42db80aaeed3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {aecfc1c1-e357-4806-8d0f-42db80aaeed3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {aecfc1c1-e357-4806-8d0f-42db80aaeed3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {aecfc1c1-e357-4806-8d0f-42db80aaeed3}.Release|Any CPU.Build.0 = Release|Any CPU
+        {9ef0c641-b526-4481-8e12-ad9a0d0680df}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {9ef0c641-b526-4481-8e12-ad9a0d0680df}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {9ef0c641-b526-4481-8e12-ad9a0d0680df}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {9ef0c641-b526-4481-8e12-ad9a0d0680df}.Release|Any CPU.Build.0 = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(SolutionProperties) = preSolution
+        HideSolutionNode = FALSE
+    EndGlobalSection
+EndGlobal
