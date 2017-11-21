@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 MessageMediaMessages.PCL
-This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io )
 -->
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>MessageMediaMessages.PCL</id>
+    <id>MessageMedia.SDK.Messages</id>
     <version>1.0.0</version>
-    <title>MessageMediaMessages.PCL</title>
-    <authors>APIMATIC 2.0</authors>
-    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <title>MessageMedia Messages SDK</title>
+    <authors>MessageMedia Developers</authors>
+    <projectUrl>https://developers.messagemedia.com/</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/messagemedia/messages-csharp-sdk/master/mm-logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.</description>
-    <summary />
-    <releaseNotes />
-    <copyright>Copyright 2016</copyright>
+    <summary>MessageMedia Messages SDK</summary>
+    <releaseNotes>First release of MessageMedia Messages C# SDK</releaseNotes>
+    <copyright>Copyright 2017</copyright>
     <language>en-US</language>
         <dependencies>
             <dependency id="APIMATIC.SDK.Common" version="2.1.0.0" />
         </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\MessageMediaMessages.PCL.dll" target="lib\MessageMediaMessages.PCL.dll" />
+    <file src="bin\Release\MessageMedia.SDK.Messages.dll" target="lib\MessageMedia.SDK.Messages.dll" />
   </files>
 </package>

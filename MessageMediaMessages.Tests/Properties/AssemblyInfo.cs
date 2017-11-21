@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MessageMediaMessages.Tests")]
-[assembly: AssemblyDescription("Automatically generated using APIMatic")]
+[assembly: AssemblyTitle("MessageMedia Messages SDK Tests")]
+[assembly: AssemblyDescription("Tests for the MessageMedia Messages SDK")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MessageMediaMessages.Tests")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCompany("MessageMedia")]
+[assembly: AssemblyProduct("MessageMedia Messages SDK Tests")]
+[assembly: AssemblyCopyright("Copyright © 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 // Version information for an assembly consists of the following four values:

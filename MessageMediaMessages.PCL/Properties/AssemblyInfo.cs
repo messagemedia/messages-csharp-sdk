@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MessageMediaMessages.PCL")]
-[assembly: AssemblyDescription("Automatically generated using APIMatic")]
+[assembly: AssemblyTitle("MessageMedia Messages SDK")]
+[assembly: AssemblyDescription("The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MessageMediaMessages.PCL")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCompany("MessageMedia")]
+[assembly: AssemblyProduct("MessageMedia Messages SDK")]
+[assembly: AssemblyCopyright("Copyright © 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 // Version information for an assembly consists of the following four values:
