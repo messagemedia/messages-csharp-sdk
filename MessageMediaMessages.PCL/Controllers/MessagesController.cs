@@ -114,7 +114,7 @@ namespace MessageMedia.Messages.Controllers
             //append request with appropriate headers and parameters
             var _headers = new Dictionary<string,string>()
             {
-                { "user-agent", "messagemedia-messages" },
+                { "user-agent", "messagemedia-messages-csharp-sdk-1.0.0" },
                 { "accept", "application/json" },
                 { "content-type", "application/json; charset=utf-8" }
             };
@@ -236,7 +236,7 @@ namespace MessageMedia.Messages.Controllers
             //append request with appropriate headers and parameters
             var _headers = new Dictionary<string,string>()
             {
-                { "user-agent", "messagemedia-messages" },
+                { "user-agent", "messagemedia-messages-csharp-sdk-1.0.0" },
                 { "accept", "application/json" }
             };
 
@@ -419,7 +419,7 @@ namespace MessageMedia.Messages.Controllers
             //append request with appropriate headers and parameters
             var _headers = new Dictionary<string,string>()
             {
-                { "user-agent", "messagemedia-messages" },
+                { "user-agent", "messagemedia-messages-csharp-sdk-1.0.0" },
                 { "accept", "application/json" },
                 { "content-type", "application/json; charset=utf-8" }
             };
