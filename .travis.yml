@@ -1,9 +1,2 @@
 language: csharp
 solution: MessageMediaMessages.sln
-install:
-  - nuget restore MessageMediaMessages.sln -Verbosity detailed
-  - nuget update MessageMediaMessages.sln -Verbosity detailed
-  - nuget install NUnit.Runners -Version 3.2.1 -OutputDirectory testrunner
-script:
-  - msbuild /p:Configuration=Release MessageMediaMessages.sln
-  - mono ./testrunner/NUnit.ConsoleRunner.3.2.1/tools/nunit3-console.exe ./MessageMediaMessages.Tests/bin/Release/MessageMediaMessages.Tests.dll
