@@ -43,6 +43,8 @@ namespace MessageMedia.Messages
             {
                 if (client == null)
                 {
+                    Configuration.BasicAuthUserName = Environment.GetEnvironmentVariable("MessageMediaApiTestsKey", EnvironmentVariableTarget.Machine);
+                    Configuration.BasicAuthPassword = Environment.GetEnvironmentVariable("MessageMediaApiTestsSecret", EnvironmentVariableTarget.Machine);
                     client = new MessageMediaMessagesClient();
                 }
                 return client;

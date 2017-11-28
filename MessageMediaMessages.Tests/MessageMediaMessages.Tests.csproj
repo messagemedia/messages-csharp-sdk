@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
  - MessageMediaMessages.Tests
  -
@@ -7,7 +7,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9ef0c641-b526-4481-8e12-ad9a0d0680df}</ProjectGuid>
+    <ProjectGuid>{9EF0C641-B526-4481-8E12-AD9A0D0680DF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MessageMedia.Messages</RootNamespace>
@@ -58,15 +58,11 @@
       <HintPath>..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-  
     <Reference Include="APIMATIC.SDK.Common">
       <HintPath>..\packages\APIMATIC.SDK.Common.2.1.0.0\lib\portable-net40+sl5+wp80+win8+wpa81\APIMATIC.SDK.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Net" />
-    <Reference Include="System.Net.Http">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Extensions">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
     </Reference>
@@ -87,9 +83,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MessageMediaMessages.PCL\MessageMediaMessages.PCL.csproj">
-      <Project>{aecfc1c1-e357-4806-8d0f-42db80aaeed3}</Project>
-      <Name>MessageMediaMessages.PCL</Name>
+    <ProjectReference Include="..\MessageMedia.SDK.Messages\MessageMedia.SDK.Messages.csproj">
+      <Project>{653a8f64-f582-4689-82df-c22b5ace6322}</Project>
+      <Name>MessageMedia.SDK.Messages</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
