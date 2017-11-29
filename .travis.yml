@@ -4,6 +4,7 @@ install:
   - nuget restore MessageMediaMessages.sln
   - nuget install NUnit.Runners -Version 3.2.1 -OutputDirectory testrunner
 script:
-  - msbuild /v:diag /t:restore /p:Configuration=Release MessageMediaMessages.sln
+  - msbuild /t:restore /p:Configuration=Release MessageMediaMessages.sln
+  - msbuild /p:Configuration=Release MessageMediaMessages.sln
   - mono ./testrunner/NUnit.ConsoleRunner.3.2.1/tools/nunit3-console.exe ./MessageMediaMessages.Tests/bin/Release/MessageMediaMessages.Tests.dll
  
