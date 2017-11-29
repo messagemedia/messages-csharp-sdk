@@ -27,7 +27,7 @@ namespace MessageMedia.Messages
             //hooking events for catching http requests and responses
             GetClient().SharedHttpClient.OnBeforeHttpRequestEvent += httpCallBackHandler.OnBeforeHttpRequestEventHandler;
             GetClient().SharedHttpClient.OnAfterHttpResponseEvent += httpCallBackHandler.OnAfterHttpResponseEventHandler;
-        }
+		}
 
         // Singleton instance of client for all test classes
         private static MessageMediaMessagesClient client;
