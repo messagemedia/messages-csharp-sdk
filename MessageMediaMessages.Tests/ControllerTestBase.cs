@@ -43,11 +43,15 @@ namespace MessageMedia.Messages
             {
                 if (client == null)
                 {
-                    Configuration.BasicAuthUserName = Environment.GetEnvironmentVariable("MessageMediaApiTestsKey", EnvironmentVariableTarget.Machine);
-                    Configuration.BasicAuthPassword = Environment.GetEnvironmentVariable("MessageMediaApiTestsSecret", EnvironmentVariableTarget.Machine);
+                    Configuration.BasicAuthUserName = Environment.GetEnvironmentVariable("MessageMediaApiTestsKey");
+                    Configuration.BasicAuthPassword = Environment.GetEnvironmentVariable("MessageMediaApiTestsSecret");
                     client = new MessageMediaMessagesClient();
-                }
-                return client;
+
+					Console.WriteLine(string.IsNullOrEmpty(Configuration.BasicAuthUserName) ? "Did not receive username" : "Username found, length: " + Configuration.BasicAuthUserName.Length);
+					Console.WriteLine(string.IsNullOrEmpty(Configuration.BasicAuthPassword) ? "Did not receive password" : "Username found, length: " + Configuration.BasicAuthPassword.Length);
+				}
+
+				return client;
             }
         }
     }
