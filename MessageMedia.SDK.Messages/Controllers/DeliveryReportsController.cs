@@ -114,9 +114,9 @@ namespace MessageMedia.Messages.Controllers
         /// polling the check delivery reports endpoint.*
         /// </summary>
         /// <return>Returns the Models.CheckDeliveryReportsResponse response from the API call</return>
-        public Models.CheckDeliveryReportsResponse GetCheckDeliveryReports()
+        public Models.CheckDeliveryReportsResponse GetCheckDeliveryReports(string accountHeaderValue = null)
         {
-            Task<Models.CheckDeliveryReportsResponse> t = GetCheckDeliveryReportsAsync();
+            Task<Models.CheckDeliveryReportsResponse> t = GetCheckDeliveryReportsAsync(accountHeaderValue);
             APIHelper.RunTaskSynchronously(t);
             return t.Result;
         }
@@ -189,7 +189,7 @@ namespace MessageMedia.Messages.Controllers
         /// polling the check delivery reports endpoint.*
         /// </summary>
         /// <return>Returns the Models.CheckDeliveryReportsResponse response from the API call</return>
-        public async Task<Models.CheckDeliveryReportsResponse> GetCheckDeliveryReportsAsync()
+        public async Task<Models.CheckDeliveryReportsResponse> GetCheckDeliveryReportsAsync(string accountHeaderValue = null)
         {
             //the base uri for api requests
             string _baseUri = Configuration.BaseUri;
@@ -209,8 +209,10 @@ namespace MessageMedia.Messages.Controllers
                 { "accept", "application/json" }
             };
 
-            //prepare the API call request to fetch the response
-            HttpRequest _request = GetHttpRequest(_queryUrl, _headers);
+			AddAccountHeaderTo(_headers, accountHeaderValue);
+
+			//prepare the API call request to fetch the response
+			HttpRequest _request = GetHttpRequest(_queryUrl, _headers);
 
             //invoke request and get response
             HttpStringResponse _response = (HttpStringResponse) await ClientInstance.ExecuteAsStringAsync(_request).ConfigureAwait(false);
@@ -248,7 +250,7 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        public dynamic CreateConfirmDeliveryReportsAsReceived(Models.ConfirmDeliveryReportsAsReceivedRequest body)
+        public dynamic CreateConfirmDeliveryReportsAsReceived(Models.ConfirmDeliveryReportsAsReceivedRequest body, string accountHeaderValue = null)
         {
             Task<dynamic> t = CreateConfirmDeliveryReportsAsReceivedAsync(body);
             APIHelper.RunTaskSynchronously(t);
@@ -275,7 +277,7 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        public async Task<dynamic> CreateConfirmDeliveryReportsAsReceivedAsync(Models.ConfirmDeliveryReportsAsReceivedRequest body)
+        public async Task<dynamic> CreateConfirmDeliveryReportsAsReceivedAsync(Models.ConfirmDeliveryReportsAsReceivedRequest body, string accountHeaderValue = null)
         {
             //the base uri for api requests
             string _baseUri = Configuration.BaseUri;
@@ -296,6 +298,8 @@ namespace MessageMedia.Messages.Controllers
                 { "accept", "application/json" },
                 { "content-type", "application/json; charset=utf-8" }
             };
+
+			AddAccountHeaderTo(_headers, accountHeaderValue);
 
             //append body params
             var _body = APIHelper.JsonSerialize(body);

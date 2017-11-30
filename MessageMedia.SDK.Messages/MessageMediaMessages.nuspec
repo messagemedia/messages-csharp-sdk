@@ -16,21 +16,21 @@ MessageMediaMessages.PCL
     <releaseNotes>First release of MessageMedia Messages C# SDK</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <language>en-US</language>
-        <dependencies>
-            <dependency id="APIMATIC.SDK.Common" version="2.1.0.0" />
-			<dependency id="Newtonsoft.Json" version="10.0.3"/>
-        </dependencies>
+    <dependencies>
+      <dependency id="APIMATIC.SDK.Common" version="2.1.0.0" />
+      <dependency id="Newtonsoft.Json" version="10.0.3"/>
+    </dependencies>
   </metadata>
   <files>
-	<!-- symbol server support-->
-	<file src="**\*.cs" target="src\" exclude="**\obj\**"/>
-	
-	<!-- Assemblies and documentation-->
+    <!-- symbol server support-->
+    <file src="**\*.cs" target="src\" exclude="**\obj\**"/>
+
+    <!-- Assemblies and documentation-->
     <file src="bin\Release\net45\MessageMedia.SDK.Messages.dll" target="lib\net45\MessageMedia.SDK.Messages.dll" />
-	<file src="bin\Release\net45\MessageMedia.SDK.Messages.xml" target="lib\net45\MessageMedia.SDK.Messages.xml" />
-	<file src="bin\Release\net45\MessageMedia.SDK.Messages.pdb" target="lib\net45\MessageMedia.SDK.Messages.pdb" />
-	<file src="bin\Release\netstandard1.3\MessageMedia.SDK.Messages.dll" target="lib\netstandard1.3\MessageMedia.SDK.Messages.dll" />
-	<file src="bin\Release\netstandard1.3\MessageMedia.SDK.Messages.xml" target="lib\netstandard1.3\MessageMedia.SDK.Messages.xml" />
-	<file src="bin\Release\netstandard1.3\MessageMedia.SDK.Messages.pdb" target="lib\netstandard1.3\MessageMedia.SDK.Messages.pdb" />
+    <file src="bin\Release\net45\MessageMedia.SDK.Messages.xml" target="lib\net45\MessageMedia.SDK.Messages.xml" />
+    <file src="bin\Release\net45\MessageMedia.SDK.Messages.pdb" target="lib\net45\MessageMedia.SDK.Messages.pdb" />
+    <file src="bin\Release\netstandard1.3\MessageMedia.SDK.Messages.dll" target="lib\netstandard1.3\MessageMedia.SDK.Messages.dll" />
+    <file src="bin\Release\netstandard1.3\MessageMedia.SDK.Messages.xml" target="lib\netstandard1.3\MessageMedia.SDK.Messages.xml" />
+    <file src="bin\Release\netstandard1.3\MessageMedia.SDK.Messages.pdb" target="lib\netstandard1.3\MessageMedia.SDK.Messages.pdb" />
   </files>
 </package>

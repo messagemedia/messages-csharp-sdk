@@ -65,7 +65,7 @@ namespace MessageMedia.Messages.Controllers
         /// <param name="messageId">Required parameter: Example: </param>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        public dynamic UpdateCancelScheduledMessage(string messageId, Models.CancelScheduledMessageRequest body)
+        public dynamic UpdateCancelScheduledMessage(string messageId, Models.CancelScheduledMessageRequest body, string accountHeaderValue = null)
         {
             Task<dynamic> t = UpdateCancelScheduledMessageAsync(messageId, body);
             APIHelper.RunTaskSynchronously(t);
@@ -91,7 +91,7 @@ namespace MessageMedia.Messages.Controllers
         /// <param name="messageId">Required parameter: Example: </param>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        public async Task<dynamic> UpdateCancelScheduledMessageAsync(string messageId, Models.CancelScheduledMessageRequest body)
+        public async Task<dynamic> UpdateCancelScheduledMessageAsync(string messageId, Models.CancelScheduledMessageRequest body, string accountHeaderValue = null)
         {
             //the base uri for api requests
             string _baseUri = Configuration.BaseUri;
@@ -106,7 +106,6 @@ namespace MessageMedia.Messages.Controllers
                 { "messageId", messageId }
             });
 
-
             //validate and preprocess url
             string _queryUrl = APIHelper.CleanUrl(_queryBuilder);
 
@@ -118,8 +117,10 @@ namespace MessageMedia.Messages.Controllers
                 { "content-type", "application/json; charset=utf-8" }
             };
 
-            //append body params
-            var _body = APIHelper.JsonSerialize(body);
+			AddAccountHeaderTo(_headers, accountHeaderValue);
+
+			//append body params
+			var _body = APIHelper.JsonSerialize(body);
 
             //prepare the API call request to fetch the response
             HttpRequest _request = ClientInstance.PutBody(_queryUrl, _headers, _body, Configuration.BasicAuthUserName, Configuration.BasicAuthPassword);
@@ -177,7 +178,7 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="messageId">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        public dynamic GetMessageStatus(string messageId)
+        public dynamic GetMessageStatus(string messageId, string accountHeaderValue = null)
         {
             Task<dynamic> t = GetMessageStatusAsync(messageId);
             APIHelper.RunTaskSynchronously(t);
@@ -213,7 +214,7 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="messageId">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        public async Task<dynamic> GetMessageStatusAsync(string messageId)
+        public async Task<dynamic> GetMessageStatusAsync(string messageId, string accountHeaderValue = null)
         {
             //the base uri for api requests
             string _baseUri = Configuration.BaseUri;
@@ -229,7 +230,6 @@ namespace MessageMedia.Messages.Controllers
                 { "messageId", messageId }
             });
 
-
             //validate and preprocess url
             string _queryUrl = APIHelper.CleanUrl(_queryBuilder);
 
@@ -240,8 +240,10 @@ namespace MessageMedia.Messages.Controllers
                 { "accept", "application/json" }
             };
 
-            //prepare the API call request to fetch the response
-            HttpRequest _request = GetHttpRequest(_queryUrl, _headers);
+			AddAccountHeaderTo(_headers, accountHeaderValue);
+
+			//prepare the API call request to fetch the response
+			HttpRequest _request = GetHttpRequest(_queryUrl, _headers);
 
             //invoke request and get response
             HttpStringResponse _response = (HttpStringResponse) await ClientInstance.ExecuteAsStringAsync(_request).ConfigureAwait(false);
@@ -330,9 +332,9 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the Models.SendMessagesResponse response from the API call</return>
-        public Models.SendMessagesResponse CreateSendMessages(Models.SendMessagesRequest body)
+        public Models.SendMessagesResponse CreateSendMessages(Models.SendMessagesRequest body, string accountHeaderValue = null)
         {
-            Task<Models.SendMessagesResponse> t = CreateSendMessagesAsync(body);
+            Task<Models.SendMessagesResponse> t = CreateSendMessagesAsync(body, accountHeaderValue);
             APIHelper.RunTaskSynchronously(t);
             return t.Result;
         }
@@ -403,7 +405,7 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the Models.SendMessagesResponse response from the API call</return>
-        public async Task<Models.SendMessagesResponse> CreateSendMessagesAsync(Models.SendMessagesRequest body)
+        public async Task<Models.SendMessagesResponse> CreateSendMessagesAsync(Models.SendMessagesRequest body, string accountHeaderValue = null)
         {
             //the base uri for api requests
             string _baseUri = Configuration.BaseUri;
@@ -427,6 +429,8 @@ namespace MessageMedia.Messages.Controllers
 
             //append body params
             var _body = APIHelper.JsonSerialize(body);
+
+			AddAccountHeaderTo(_headers, accountHeaderValue);
 
 			//prepare the API call request to fetch the response
 			HttpRequest _request = PostHttpRequest(_queryUrl, _headers, _body);

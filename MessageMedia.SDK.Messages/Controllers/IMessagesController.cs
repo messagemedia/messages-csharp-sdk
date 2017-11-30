@@ -37,7 +37,7 @@ namespace MessageMedia.Messages.Controllers
         /// <param name="messageId">Required parameter: Example: </param>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        dynamic UpdateCancelScheduledMessage(string messageId, Models.CancelScheduledMessageRequest body);
+        dynamic UpdateCancelScheduledMessage(string messageId, Models.CancelScheduledMessageRequest body, string accountHeaderValue = null);
 
         /// <summary>
         /// Cancel a scheduled message that has not yet been delivered.
@@ -58,7 +58,7 @@ namespace MessageMedia.Messages.Controllers
         /// <param name="messageId">Required parameter: Example: </param>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        Task<dynamic> UpdateCancelScheduledMessageAsync(string messageId, Models.CancelScheduledMessageRequest body);
+        Task<dynamic> UpdateCancelScheduledMessageAsync(string messageId, Models.CancelScheduledMessageRequest body, string accountHeaderValue = null);
 
         /// <summary>
         /// Retrieve the current status of a message using the message ID returned in the send messages end point.
@@ -89,7 +89,7 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="messageId">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        dynamic GetMessageStatus(string messageId);
+        dynamic GetMessageStatus(string messageId, string accountHeaderValue = null);
 
         /// <summary>
         /// Retrieve the current status of a message using the message ID returned in the send messages end point.
@@ -120,7 +120,7 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="messageId">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        Task<dynamic> GetMessageStatusAsync(string messageId);
+        Task<dynamic> GetMessageStatusAsync(string messageId, string accountHeaderValue = null);
 
         /// <summary>
         /// Submit one or more (up to 100 per request) SMS or text to voice messages for delivery.
@@ -188,7 +188,7 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the Models.SendMessagesResponse response from the API call</return>
-        Models.SendMessagesResponse CreateSendMessages(Models.SendMessagesRequest body);
+        Models.SendMessagesResponse CreateSendMessages(Models.SendMessagesRequest body, string accountHeaderValue = null);
 
         /// <summary>
         /// Submit one or more (up to 100 per request) SMS or text to voice messages for delivery.
@@ -256,7 +256,7 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the Models.SendMessagesResponse response from the API call</return>
-        Task<Models.SendMessagesResponse> CreateSendMessagesAsync(Models.SendMessagesRequest body);
+        Task<Models.SendMessagesResponse> CreateSendMessagesAsync(Models.SendMessagesRequest body, string accountHeaderValue = null);
 
     }
 } 

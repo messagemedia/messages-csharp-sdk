@@ -38,7 +38,7 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        dynamic CreateConfirmRepliesAsReceived(Models.ConfirmRepliesAsReceivedRequest body);
+        dynamic CreateConfirmRepliesAsReceived(Models.ConfirmRepliesAsReceivedRequest body, string accountHeaderValue = null);
 
         /// <summary>
         /// Mark a reply message as confirmed so it is no longer returned in check replies requests.
@@ -60,7 +60,7 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        Task<dynamic> CreateConfirmRepliesAsReceivedAsync(Models.ConfirmRepliesAsReceivedRequest body);
+        Task<dynamic> CreateConfirmRepliesAsReceivedAsync(Models.ConfirmRepliesAsReceivedRequest body, string accountHeaderValue = null);
 
         /// <summary>
         /// Check for any replies that have been received.
@@ -131,7 +131,7 @@ namespace MessageMedia.Messages.Controllers
         /// the check replies endpoint.*
         /// </summary>
         /// <return>Returns the Models.CheckRepliesResponse response from the API call</return>
-        Models.CheckRepliesResponse GetCheckReplies();
+        Models.CheckRepliesResponse GetCheckReplies(string accountHeaderValue = null);
 
         /// <summary>
         /// Check for any replies that have been received.
@@ -202,7 +202,7 @@ namespace MessageMedia.Messages.Controllers
         /// the check replies endpoint.*
         /// </summary>
         /// <return>Returns the Models.CheckRepliesResponse response from the API call</return>
-        Task<Models.CheckRepliesResponse> GetCheckRepliesAsync();
+        Task<Models.CheckRepliesResponse> GetCheckRepliesAsync(string accountHeaderValue = null);
 
     }
 } 

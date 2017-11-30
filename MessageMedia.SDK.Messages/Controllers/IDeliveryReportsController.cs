@@ -86,7 +86,7 @@ namespace MessageMedia.Messages.Controllers
         /// polling the check delivery reports endpoint.*
         /// </summary>
         /// <return>Returns the Models.CheckDeliveryReportsResponse response from the API call</return>
-        Models.CheckDeliveryReportsResponse GetCheckDeliveryReports();
+        Models.CheckDeliveryReportsResponse GetCheckDeliveryReports(string accountHeaderValue = null);
 
         /// <summary>
         /// Check for any delivery reports that have been received.
@@ -156,7 +156,7 @@ namespace MessageMedia.Messages.Controllers
         /// polling the check delivery reports endpoint.*
         /// </summary>
         /// <return>Returns the Models.CheckDeliveryReportsResponse response from the API call</return>
-        Task<Models.CheckDeliveryReportsResponse> GetCheckDeliveryReportsAsync();
+        Task<Models.CheckDeliveryReportsResponse> GetCheckDeliveryReportsAsync(string accountHeaderValue = null);
 
         /// <summary>
         /// Mark a delivery report as confirmed so it is no longer return in check delivery reports requests.
@@ -178,7 +178,7 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        dynamic CreateConfirmDeliveryReportsAsReceived(Models.ConfirmDeliveryReportsAsReceivedRequest body);
+        dynamic CreateConfirmDeliveryReportsAsReceived(Models.ConfirmDeliveryReportsAsReceivedRequest body, string accountHeaderValue = null);
 
         /// <summary>
         /// Mark a delivery report as confirmed so it is no longer return in check delivery reports requests.
@@ -200,7 +200,7 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        Task<dynamic> CreateConfirmDeliveryReportsAsReceivedAsync(Models.ConfirmDeliveryReportsAsReceivedRequest body);
+        Task<dynamic> CreateConfirmDeliveryReportsAsReceivedAsync(Models.ConfirmDeliveryReportsAsReceivedRequest body, string accountHeaderValue = null);
 
-    }
+	}
 } 

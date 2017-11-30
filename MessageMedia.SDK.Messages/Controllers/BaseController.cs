@@ -16,41 +16,41 @@ using APIMATIC.SDK.Http.Request;
 
 namespace MessageMedia.Messages.Controllers
 {
-    public partial class BaseController
-    {
-        #region shared http client instance
-        private static object syncObject = new object();
-        private static IHttpClient clientInstance = null;
+	public partial class BaseController
+	{
+		#region shared http client instance
+		private static object syncObject = new object();
+		private static IHttpClient clientInstance = null;
 
-        public static IHttpClient ClientInstance
-        {
-            get
-            {
-                lock(syncObject)
-                {
-                    if(null == clientInstance)
-                    {
-                        clientInstance = new HTTPClient()
+		public static IHttpClient ClientInstance
+		{
+			get
+			{
+				lock(syncObject)
+				{
+					if(null == clientInstance)
+					{
+						clientInstance = new HTTPClient()
 ;
-                    }
-                    return clientInstance;
-                }
-            }
-            set
-            {
-                lock (syncObject)
-                {
-                    if (value is IHttpClient)
-                    {
-                        clientInstance = value;
-                    }
-                }
-            }
-        }
-        #endregion shared http client instance
+					}
+					return clientInstance;
+				}
+			}
+			set
+			{
+				lock(syncObject)
+				{
+					if(value is IHttpClient)
+					{
+						clientInstance = value;
+					}
+				}
+			}
+		}
+		#endregion shared http client instance
 
-        internal ArrayDeserialization ArrayDeserializationFormat = ArrayDeserialization.Indexed;
-        internal static char ParameterSeparator = '&';
+		internal ArrayDeserialization ArrayDeserializationFormat = ArrayDeserialization.Indexed;
+		internal static char ParameterSeparator = '&';
 
 		internal HttpRequest GetHttpRequest(string url, Dictionary<string, string> headers)
 		{
@@ -84,6 +84,14 @@ namespace MessageMedia.Messages.Controllers
 			}
 
 			return request;
+		}
+
+		internal void AddAccountHeaderTo(Dictionary<string, string> headers, string accountHeaderValue)
+		{
+			if(headers != null && accountHeaderValue != null)
+			{
+				headers.Add("Account", accountHeaderValue);
+			}
 		}
 
 		/// <summary>

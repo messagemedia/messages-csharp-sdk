@@ -67,9 +67,9 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        public dynamic CreateConfirmRepliesAsReceived(Models.ConfirmRepliesAsReceivedRequest body)
+        public dynamic CreateConfirmRepliesAsReceived(Models.ConfirmRepliesAsReceivedRequest body, string accountHeaderValue = null)
         {
-            Task<dynamic> t = CreateConfirmRepliesAsReceivedAsync(body);
+            Task<dynamic> t = CreateConfirmRepliesAsReceivedAsync(body, accountHeaderValue);
             APIHelper.RunTaskSynchronously(t);
             return t.Result;
         }
@@ -94,7 +94,7 @@ namespace MessageMedia.Messages.Controllers
         /// </summary>
         /// <param name="body">Required parameter: Example: </param>
         /// <return>Returns the dynamic response from the API call</return>
-        public async Task<dynamic> CreateConfirmRepliesAsReceivedAsync(Models.ConfirmRepliesAsReceivedRequest body)
+        public async Task<dynamic> CreateConfirmRepliesAsReceivedAsync(Models.ConfirmRepliesAsReceivedRequest body, string accountHeaderValue = null)
         {
             //the base uri for api requests
             string _baseUri = Configuration.BaseUri;
@@ -212,9 +212,9 @@ namespace MessageMedia.Messages.Controllers
         /// the check replies endpoint.*
         /// </summary>
         /// <return>Returns the Models.CheckRepliesResponse response from the API call</return>
-        public Models.CheckRepliesResponse GetCheckReplies()
+        public Models.CheckRepliesResponse GetCheckReplies(string accountHeaderValue = null)
         {
-            Task<Models.CheckRepliesResponse> t = GetCheckRepliesAsync();
+            Task<Models.CheckRepliesResponse> t = GetCheckRepliesAsync(accountHeaderValue);
             APIHelper.RunTaskSynchronously(t);
             return t.Result;
         }
@@ -288,7 +288,7 @@ namespace MessageMedia.Messages.Controllers
         /// the check replies endpoint.*
         /// </summary>
         /// <return>Returns the Models.CheckRepliesResponse response from the API call</return>
-        public async Task<Models.CheckRepliesResponse> GetCheckRepliesAsync()
+        public async Task<Models.CheckRepliesResponse> GetCheckRepliesAsync(string accountHeaderValue = null)
         {
             //the base uri for api requests
             string _baseUri = Configuration.BaseUri;
@@ -307,6 +307,8 @@ namespace MessageMedia.Messages.Controllers
                 { "user-agent", "messagemedia-messages-csharp-sdk-1.0.0" },
 				{ "accept", "application/json" }
             };
+
+			AddAccountHeaderTo(_headers, accountHeaderValue);
 
 			//prepare the API call request to fetch the response
 			HttpRequest _request = GetHttpRequest(_queryUrl, _headers);
