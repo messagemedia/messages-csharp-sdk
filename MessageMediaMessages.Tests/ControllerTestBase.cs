@@ -29,8 +29,8 @@ namespace MessageMedia.Messages
             GetClient().SharedHttpClient.OnAfterHttpResponseEvent += httpCallBackHandler.OnAfterHttpResponseEventHandler;
 		}
 
-        // Singleton instance of client for all test classes
-        private static MessageMediaMessagesClient client;
+		// Singleton instance of client for all test classes
+		private static MessageMediaMessagesClient client;
         private static object clientSync = new object();
 
         /// <summary>
@@ -46,9 +46,6 @@ namespace MessageMedia.Messages
                     Configuration.BasicAuthUserName = Environment.GetEnvironmentVariable("MessageMediaApiTestsKey");
                     Configuration.BasicAuthPassword = Environment.GetEnvironmentVariable("MessageMediaApiTestsSecret");
                     client = new MessageMediaMessagesClient();
-
-					Console.WriteLine(string.IsNullOrEmpty(Configuration.BasicAuthUserName) ? "Did not receive username" : "Username found, length: " + Configuration.BasicAuthUserName.Length);
-					Console.WriteLine(string.IsNullOrEmpty(Configuration.BasicAuthPassword) ? "Did not receive password" : "Username found, length: " + Configuration.BasicAuthPassword.Length);
 				}
 
 				return client;

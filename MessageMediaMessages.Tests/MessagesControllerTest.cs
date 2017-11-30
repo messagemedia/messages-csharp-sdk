@@ -116,16 +116,13 @@ namespace MessageMedia.Messages
             catch(APIException) {};
 
             // Test response code
-            Assert.AreEqual(202, httpCallBackHandler.Response.StatusCode,
-                    "Status should be 202");
+            Assert.AreEqual(202, httpCallBackHandler.Response.StatusCode, "Status should be 202");
 
             // Test headers
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("Content-Type", null);
 
-            Assert.IsTrue(TestHelper.AreHeadersProperSubsetOf (
-                    headers, httpCallBackHandler.Response.Headers),
-                    "Headers should match");
+            Assert.IsTrue(TestHelper.AreHeadersProperSubsetOf(headers, httpCallBackHandler.Response.Headers), "Headers should match");
 
             // Test whether the captured response is as we expected
             Assert.IsNotNull(result, "Result should exist");

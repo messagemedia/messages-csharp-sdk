@@ -15,6 +15,7 @@ using APIMATIC.SDK.Common;
 using APIMATIC.SDK.Http.Request;
 using APIMATIC.SDK.Http.Response;
 using APIMATIC.SDK.Http.Client;
+using System.Net;
 
 namespace MessageMedia.Messages.Controllers
 {
@@ -26,10 +27,10 @@ namespace MessageMedia.Messages.Controllers
         private static object syncObject = new object();
         private static RepliesController instance = null;
 
-        /// <summary>
-        /// Singleton pattern implementation
-        /// </summary>
-        internal static RepliesController Instance
+		/// <summary>
+		/// Singleton pattern implementation
+		/// </summary>
+		internal static RepliesController Instance
         {
             get
             {
@@ -97,10 +98,11 @@ namespace MessageMedia.Messages.Controllers
         {
             //the base uri for api requests
             string _baseUri = Configuration.BaseUri;
+			string _methodUri = "/v1/replies/confirmed";
 
-            //prepare query string for API call
-            StringBuilder _queryBuilder = new StringBuilder(_baseUri);
-            _queryBuilder.Append("/v1/replies/confirmed");
+			//prepare query string for API call
+			StringBuilder _queryBuilder = new StringBuilder(_baseUri);
+            _queryBuilder.Append(_methodUri);
 
 
             //validate and preprocess url
@@ -114,11 +116,11 @@ namespace MessageMedia.Messages.Controllers
                 { "content-type", "application/json; charset=utf-8" }
             };
 
-            //append body params
-            var _body = APIHelper.JsonSerialize(body);
+			//append body params
+			var _body = APIHelper.JsonSerialize(body);
 
-            //prepare the API call request to fetch the response
-            HttpRequest _request = ClientInstance.PostBody(_queryUrl, _headers, _body, Configuration.BasicAuthUserName, Configuration.BasicAuthPassword);
+			//prepare the API call request to fetch the response
+			HttpRequest _request = PostHttpRequest(_queryUrl, _headers, _body);
 
             //invoke request and get response
             HttpStringResponse _response = (HttpStringResponse) await ClientInstance.ExecuteAsStringAsync(_request).ConfigureAwait(false);
@@ -290,11 +292,11 @@ namespace MessageMedia.Messages.Controllers
         {
             //the base uri for api requests
             string _baseUri = Configuration.BaseUri;
+			string _methodUri = "/v1/replies";
 
-            //prepare query string for API call
-            StringBuilder _queryBuilder = new StringBuilder(_baseUri);
-            _queryBuilder.Append("/v1/replies");
-
+			//prepare query string for API call
+			StringBuilder _queryBuilder = new StringBuilder(_baseUri);
+            _queryBuilder.Append(_methodUri);
 
             //validate and preprocess url
             string _queryUrl = APIHelper.CleanUrl(_queryBuilder);
@@ -303,25 +305,26 @@ namespace MessageMedia.Messages.Controllers
             var _headers = new Dictionary<string,string>()
             {
                 { "user-agent", "messagemedia-messages-csharp-sdk-1.0.0" },
-                { "accept", "application/json" }
+				{ "accept", "application/json" }
             };
 
-            //prepare the API call request to fetch the response
-            HttpRequest _request = ClientInstance.Get(_queryUrl,_headers, Configuration.BasicAuthUserName, Configuration.BasicAuthPassword);
+			//prepare the API call request to fetch the response
+			HttpRequest _request = GetHttpRequest(_queryUrl, _headers);
+			HttpStringResponse _response = (HttpStringResponse) await ClientInstance.ExecuteAsStringAsync(_request).ConfigureAwait(false);
 
-            //invoke request and get response
-            HttpStringResponse _response = (HttpStringResponse) await ClientInstance.ExecuteAsStringAsync(_request).ConfigureAwait(false);
-            HttpContext _context = new HttpContext(_request,_response);
-            //handle errors defined at the API level
-            base.ValidateResponse(_response, _context);
+			//invoke request and get response
+			HttpContext _context = new HttpContext(_request,_response);
 
-            try
-            {
+			//handle errors defined at the API level
+			base.ValidateResponse(_response, _context);
+
+			try
+			{
                 return APIHelper.JsonDeserialize<Models.CheckRepliesResponse>(_response.Body);
             }
             catch (Exception _ex)
             {
-                throw new APIException("Failed to parse the response: " + _ex.Message, _context);
+                throw new APIException("Failed to parse the response: " + _ex.Message, null);
             }
         }
 

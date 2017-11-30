@@ -44,6 +44,7 @@ namespace MessageMedia.Messages
                 return RepliesController.Instance;
             }
         }
+
         /// <summary>
         /// The shared http client to use for all API calls
         /// </summary>
@@ -58,7 +59,9 @@ namespace MessageMedia.Messages
                 BaseController.ClientInstance = value;
             }        
         }
+
         #region Constructors
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -72,6 +75,9 @@ namespace MessageMedia.Messages
             Configuration.BasicAuthUserName = basicAuthUserName;
             Configuration.BasicAuthPassword = basicAuthPassword;
         }
+
         #endregion
+
+		
     }
 }

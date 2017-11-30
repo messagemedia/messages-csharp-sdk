@@ -217,9 +217,10 @@ namespace MessageMedia.Messages.Controllers
         {
             //the base uri for api requests
             string _baseUri = Configuration.BaseUri;
+			string _methodUri = $@"/v1/messages/{messageId}";
 
-            //prepare query string for API call
-            StringBuilder _queryBuilder = new StringBuilder(_baseUri);
+			//prepare query string for API call
+			StringBuilder _queryBuilder = new StringBuilder(_baseUri);
             _queryBuilder.Append("/v1/messages/{messageId}");
 
             //process optional template parameters
@@ -240,7 +241,7 @@ namespace MessageMedia.Messages.Controllers
             };
 
             //prepare the API call request to fetch the response
-            HttpRequest _request = ClientInstance.Get(_queryUrl,_headers, Configuration.BasicAuthUserName, Configuration.BasicAuthPassword);
+            HttpRequest _request = GetHttpRequest(_queryUrl, _headers);
 
             //invoke request and get response
             HttpStringResponse _response = (HttpStringResponse) await ClientInstance.ExecuteAsStringAsync(_request).ConfigureAwait(false);
@@ -406,10 +407,11 @@ namespace MessageMedia.Messages.Controllers
         {
             //the base uri for api requests
             string _baseUri = Configuration.BaseUri;
+			string _methodUri = "/v1/messages";
 
-            //prepare query string for API call
-            StringBuilder _queryBuilder = new StringBuilder(_baseUri);
-            _queryBuilder.Append("/v1/messages");
+			//prepare query string for API call
+			StringBuilder _queryBuilder = new StringBuilder(_baseUri);
+            _queryBuilder.Append(_methodUri);
 
 
             //validate and preprocess url
@@ -426,8 +428,8 @@ namespace MessageMedia.Messages.Controllers
             //append body params
             var _body = APIHelper.JsonSerialize(body);
 
-            //prepare the API call request to fetch the response
-            HttpRequest _request = ClientInstance.PostBody(_queryUrl, _headers, _body, Configuration.BasicAuthUserName, Configuration.BasicAuthPassword);
+			//prepare the API call request to fetch the response
+			HttpRequest _request = PostHttpRequest(_queryUrl, _headers, _body);
 
             //invoke request and get response
             HttpStringResponse _response = (HttpStringResponse) await ClientInstance.ExecuteAsStringAsync(_request).ConfigureAwait(false);
