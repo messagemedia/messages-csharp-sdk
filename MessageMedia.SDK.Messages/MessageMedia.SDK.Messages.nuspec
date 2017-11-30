@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-MessageMediaMessages.PCL
--->
+<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MessageMedia.SDK.Messages</id>
@@ -16,6 +13,7 @@ MessageMediaMessages.PCL
     <releaseNotes>First release of MessageMedia Messages C# SDK</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <language>en-US</language>
+    <tags>web messaging sms</tags>
     <dependencies>
       <dependency id="APIMATIC.SDK.Common" version="2.1.0.0" />
       <dependency id="Newtonsoft.Json" version="10.0.3"/>
@@ -33,4 +31,5 @@ MessageMediaMessages.PCL
     <file src="bin\Release\netstandard1.3\MessageMedia.SDK.Messages.xml" target="lib\netstandard1.3\MessageMedia.SDK.Messages.xml" />
     <file src="bin\Release\netstandard1.3\MessageMedia.SDK.Messages.pdb" target="lib\netstandard1.3\MessageMedia.SDK.Messages.pdb" />
   </files>
+
 </package>
