@@ -70,14 +70,21 @@ namespace MessageMedia.Messages
         /// <summary>
         /// Client initialization constructor
         /// </summary>
-        public MessageMediaMessagesClient(string basicAuthUserName, string basicAuthPassword)
+        public MessageMediaMessagesClient(string basicAuthUserName, string basicAuthPassword, bool hmacAuthentication = false)
         {
-            Configuration.BasicAuthUserName = basicAuthUserName;
-            Configuration.BasicAuthPassword = basicAuthPassword;
-        }
+			if(!hmacAuthentication)
+			{
+				Configuration.BasicAuthUserName = basicAuthUserName;
+				Configuration.BasicAuthPassword = basicAuthPassword;
+			}
+			else
+			{
+				Configuration.HmacAuthUserName = basicAuthUserName;
+				Configuration.HmacAuthPassword = basicAuthPassword;
+			}
+		}
 
-        #endregion
+		#endregion
 
-		
-    }
+	}
 }

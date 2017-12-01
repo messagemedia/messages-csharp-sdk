@@ -2,19 +2,13 @@
  * MessageMediaMessages.Tests
  *
  */
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Converters;
 using APIMATIC.SDK.Common; 
-using APIMATIC.SDK.Http.Client;
-using APIMATIC.SDK.Http.Response;
 using MessageMedia.Messages.Helpers;
 using NUnit.Framework;
-using MessageMedia.Messages;
 using MessageMedia.Messages.Controllers;
+using MessageMedia.Messages.Models;
 
 namespace MessageMedia.Messages
 {
@@ -57,7 +51,7 @@ namespace MessageMedia.Messages
         public async Task TestConfirmRepliesAsReceived1() 
         {
             // Parameters for the API call
-            Messages.Models.ConfirmRepliesAsReceivedRequest body = APIHelper.JsonDeserialize<Messages.Models.ConfirmRepliesAsReceivedRequest>("{    \"reply_ids\": [        \"011dcead-6988-4ad6-a1c7-6b6c68ea628d\",        \"3487b3fa-6586-4979-a233-2d1b095c7718\",        \"ba28e94b-c83d-4759-98e7-ff9c7edb87a1\"    ]}");
+            ConfirmRepliesAsReceivedRequest body = APIHelper.JsonDeserialize<ConfirmRepliesAsReceivedRequest>("{    \"reply_ids\": [        \"011dcead-6988-4ad6-a1c7-6b6c68ea628d\",        \"3487b3fa-6586-4979-a233-2d1b095c7718\",        \"ba28e94b-c83d-4759-98e7-ff9c7edb87a1\"    ]}");
 
             // Perform API call
             dynamic result = null;
@@ -153,19 +147,19 @@ namespace MessageMedia.Messages
         [Test]
         public async Task TestCheckReplies1() 
         {
-
             // Perform API call
-            Messages.Models.CheckRepliesResponse result = null;
+            CheckRepliesResponse result = null;
 
             try
             {
                 result = await controller.GetCheckRepliesAsync();
             }
-            catch(APIException) {};
+            catch(APIException apiException) {
+				Assert.IsEmpty(apiException.Message);
+			};
 
             // Test response code
-            Assert.AreEqual(200, httpCallBackHandler.Response.StatusCode,
-                    "Status should be 200");
+            Assert.AreEqual(200, httpCallBackHandler.Response.StatusCode, "Status should be 200");
 
             // Test headers
             Dictionary<string, string> headers = new Dictionary<string, string>();

@@ -9,9 +9,7 @@ using APIMATIC.SDK.Http.Response;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using System.IO;
 using System.Linq;
-using System.Net;
 using APIMATIC.SDK.Http.Request;
 
 namespace MessageMedia.Messages.Controllers
@@ -19,30 +17,31 @@ namespace MessageMedia.Messages.Controllers
 	public partial class BaseController
 	{
 		#region shared http client instance
-		private static object syncObject = new object();
-		private static IHttpClient clientInstance = null;
+		private static object _syncObject = new object();
+		private static IHttpClient _clientInstance = null;
+		protected const string SdkVersion = "messagemedia-messages-csharp-sdk-1.1.0";
 
 		public static IHttpClient ClientInstance
 		{
 			get
 			{
-				lock(syncObject)
+				lock(_syncObject)
 				{
-					if(null == clientInstance)
+					if(null == _clientInstance)
 					{
-						clientInstance = new HTTPClient()
+						_clientInstance = new HTTPClient()
 ;
 					}
-					return clientInstance;
+					return _clientInstance;
 				}
 			}
 			set
 			{
-				lock(syncObject)
+				lock(_syncObject)
 				{
 					if(value is IHttpClient)
 					{
-						clientInstance = value;
+						_clientInstance = value;
 					}
 				}
 			}
@@ -75,7 +74,7 @@ namespace MessageMedia.Messages.Controllers
 
 			if(HmacIsConfigured())
 			{
-				AddHmacHeaderTo(headers, url);
+				AddHmacHeaderTo(headers, url, body);
 				request = ClientInstance.PostBody(url, headers, body);
 			}
 			else
@@ -97,12 +96,12 @@ namespace MessageMedia.Messages.Controllers
 		/// <summary>
 		/// Validates the response against HTTP errors defined at the API level
 		/// </summary>
-		/// <param name="_response">The response recieved</param>
-		/// <param name="_context">Context of the request and the recieved response</param>
-		internal void ValidateResponse(HttpResponse _response, HttpContext _context)
+		/// <param name="response">The response recieved</param>
+		/// <param name="context">Context of the request and the recieved response</param>
+		internal void ValidateResponse(HttpResponse response, HttpContext context)
         {
-            if ((_response.StatusCode < 200) || (_response.StatusCode > 208)) //[200,208] = HTTP OK
-                throw new APIException(@"HTTP Response Not OK", _context);
+            if ((response.StatusCode < 200) || (response.StatusCode > 208)) //[200,208] = HTTP OK
+                throw new APIException(@"HTTP Response Not OK. " + ((response as HttpStringResponse != null) ? ((HttpStringResponse)response).Body : ""), context);
         }
 		
 		internal void AddHmacHeaderTo(Dictionary<string, string> headers, string url, string body = null)
@@ -120,74 +119,60 @@ namespace MessageMedia.Messages.Controllers
 			if(body != null)
 			{
 				contentHash = GetMd5HashFor(body);
-				contentSignature = $"Content-MD5:{contentHash}\n";
+				contentSignature = $"x-Content-MD5: {contentHash}\n";
 			}
 
-			var signature = GetHmacEncodingFor(dateHeader, contentSignature, body, url);
-
-			headers.Add("Date", dateHeader);
+			headers.Add("date", dateHeader);
 
 			if(!string.IsNullOrEmpty(contentHash))
 			{
-				headers.Add("Content-MD5", contentHash);
-				headers.Add("Content-Length", body.Length.ToString());
+				headers.Add("x-Content-MD5", contentHash);
+				headers.Add("content-length", body.Length.ToString());
 			}
 
-			headers.Add("Authorization", $@"hmac username=""{Configuration.HmacAuthUserName}"", algorithm=""hmac-sha1"", headers=""Date{(body != null ? " Content-MD5" : "")} request-line"", signature=""{signature}""");
-		}
+			var headerList = "";
 
-		internal string GetHmacEncodingFor(string dateHeader, string contentSignature, string body, string url)
-		{
-			var signingString = $@"Date: {dateHeader}\n{contentSignature}{(string.IsNullOrEmpty(body) ? "GET" : "POST")} {url} HTTP/1.1";
-
-			var pass = Configuration.HmacAuthPassword;
-			var encoding = Encoding.UTF8;
-			byte[] keyBytes = encoding.GetBytes(pass);
-			byte[] messageBytes = encoding.GetBytes(signingString);
-
-			using(var hmacsha1 = new HMACSHA1(keyBytes))
+			foreach(var header in headers)
 			{
-				byte[] hashmessage = hmacsha1.ComputeHash(messageBytes);
-				var signingString2 = hashmessage.Aggregate("", (s, e) => s + String.Format("{0:x2}", e), s => s);
-				var encoded = Base64Encode(signingString2);
-				return encoded;
+				headerList += header.Key + " ";
 			}
+
+			var signature = GetHmacEncodingFor(dateHeader, contentSignature, body, url, headers);
+			var authorizationHeader = $"hmac username=\"{Configuration.HmacAuthUserName}\", algorithm=\"hmac-sha1\", headers=\"date{(body != null ? " x-Content-MD5" : "")} request-line\", signature=\"{signature}\"";
+			headers.Add("Authorization", authorizationHeader);
 		}
 
-		internal string CreateToken(string message)
+		internal string GetHmacEncodingFor(string dateHeader, string contentSignature, string body, string url, Dictionary<string, string> headers)
 		{
-			var pass = Configuration.HmacAuthPassword;
-			var encoding = Encoding.UTF8;
-			byte[] keyBytes = encoding.GetBytes(pass);
-			byte[] messageBytes = encoding.GetBytes(message);
+			var signingString = $"date: {dateHeader}\n{contentSignature}{(string.IsNullOrEmpty(body) ? "GET" : "POST")} {url.Replace(Configuration.BaseUri, "")} HTTP/1.1";
+			var key = Configuration.HmacAuthPassword;
 
-			using(var hmacsha256 = new HMACSHA1(keyBytes))
+			var encoding = new ASCIIEncoding();
+			var keyBytes = encoding.GetBytes(key);
+
+			using (var hmac = new HMACSHA1(keyBytes))
 			{
-				byte[] hashmessage = hmacsha256.ComputeHash(messageBytes);
+				var messageBytes = encoding.GetBytes(signingString);
+				var hashmessage = hmac.ComputeHash(messageBytes);
+
 				return Convert.ToBase64String(hashmessage);
 			}
 		}
 
-		internal static string Base64Encode(string plainText)
+		public string GetMd5HashFor(string input)
 		{
-			var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-			return Convert.ToBase64String(plainTextBytes);
-		}
+			MD5 md5 = System.Security.Cryptography.MD5.Create();
+			byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+			byte[] hash = md5.ComputeHash(inputBytes);
+			StringBuilder sb = new StringBuilder();
 
-		internal string GetMd5HashFor(string body)
-		{
-			if(string.IsNullOrEmpty(body))
+			for (int i = 0; i < hash.Length; i++)
 			{
-				return null;
+				sb.Append(hash[i].ToString("X2"));
 			}
 
-			using(MD5 md5Hash = MD5.Create())
-			{
-				var data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(body));
-				var signingString = data.Aggregate("", (s, e) => s + String.Format("{0:x2}", e), s => s);
+			return sb.ToString();
 
-				return signingString;
-			}
 		}
 
 		internal bool HmacIsConfigured()

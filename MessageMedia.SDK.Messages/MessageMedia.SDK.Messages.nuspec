@@ -2,9 +2,10 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MessageMedia.SDK.Messages</id>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <title>MessageMedia Messages SDK</title>
     <authors>MessageMedia Developers</authors>
+    <owners>MessageMedia</owners>
     <projectUrl>https://developers.messagemedia.com/</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/messagemedia/messages-csharp-sdk/master/mm-logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -21,6 +22,8 @@
     </dependencies>
   </metadata>
   <files>
+    <file src="..\readme.md" target="" />
+
     <!-- symbol server support-->
     <file src="**\*.cs" target="src\" exclude="**\obj\**"/>
 
@@ -32,5 +35,4 @@
     <file src="bin\Release\netstandard1.3\MessageMedia.SDK.Messages.xml" target="lib\netstandard1.3\MessageMedia.SDK.Messages.xml" />
     <file src="bin\Release\netstandard1.3\MessageMedia.SDK.Messages.pdb" target="lib\netstandard1.3\MessageMedia.SDK.Messages.pdb" />
   </files>
-
 </package>

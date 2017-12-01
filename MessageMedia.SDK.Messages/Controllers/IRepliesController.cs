@@ -2,17 +2,7 @@
  * MessageMediaMessages.PCL
  *
  */
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using APIMATIC.SDK.Common;
-using APIMATIC.SDK.Http.Request;
-using APIMATIC.SDK.Http.Response;
-using APIMATIC.SDK.Http.Client;
 
 namespace MessageMedia.Messages.Controllers
 {

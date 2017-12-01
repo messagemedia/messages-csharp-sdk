@@ -2,23 +2,17 @@
  * MessageMediaMessages.Tests
  *
  */
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Converters;
-using APIMATIC.SDK.Common; 
-using APIMATIC.SDK.Http.Client;
-using APIMATIC.SDK.Http.Response;
+using APIMATIC.SDK.Common;
 using MessageMedia.Messages.Helpers;
 using NUnit.Framework;
-using MessageMedia.Messages;
 using MessageMedia.Messages.Controllers;
+using MessageMedia.Messages.Models;
 
 namespace MessageMedia.Messages
 {
-    [TestFixture]
+	[TestFixture]
     public class DeliveryReportsControllerTest : ControllerTestBase
     {
         /// <summary>
@@ -105,9 +99,8 @@ namespace MessageMedia.Messages
         [Test]
         public async Task TestCheckDeliveryReports1() 
         {
-
             // Perform API call
-            Messages.Models.CheckDeliveryReportsResponse result = null;
+            CheckDeliveryReportsResponse result = null;
 
             try
             {
@@ -153,7 +146,7 @@ namespace MessageMedia.Messages
         public async Task TestConfirmDeliveryReportsAsReceived1() 
         {
             // Parameters for the API call
-            Messages.Models.ConfirmDeliveryReportsAsReceivedRequest body = APIHelper.JsonDeserialize<Messages.Models.ConfirmDeliveryReportsAsReceivedRequest>("{    \"delivery_report_ids\": [        \"011dcead-6988-4ad6-a1c7-6b6c68ea628d\",        \"3487b3fa-6586-4979-a233-2d1b095c7718\",        \"ba28e94b-c83d-4759-98e7-ff9c7edb87a1\"    ]}");
+            ConfirmDeliveryReportsAsReceivedRequest body = APIHelper.JsonDeserialize<Models.ConfirmDeliveryReportsAsReceivedRequest>("{    \"delivery_report_ids\": [        \"011dcead-6988-4ad6-a1c7-6b6c68ea628d\",        \"3487b3fa-6586-4979-a233-2d1b095c7718\",        \"ba28e94b-c83d-4759-98e7-ff9c7edb87a1\"    ]}");
 
             // Perform API call
             dynamic result = null;

@@ -1,4 +1,3 @@
-using MessageMedia.Messages.Models;
 namespace MessageMedia.Messages
 {
     public partial class Configuration

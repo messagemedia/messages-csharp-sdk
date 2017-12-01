@@ -1,17 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
-using MessageMedia.Messages;
 using MessageMedia.Messages.Helpers;
- 
-using MessageMedia.Messages.Models;
 
 namespace MessageMedia.Messages
 {
-    [TestFixture]
+	[TestFixture]
     public class ControllerTestBase
     {
         //Test setup
@@ -43,9 +36,9 @@ namespace MessageMedia.Messages
             {
                 if (client == null)
                 {
-                    Configuration.BasicAuthUserName = Environment.GetEnvironmentVariable("MessageMediaApiTestsKey");
-                    Configuration.BasicAuthPassword = Environment.GetEnvironmentVariable("MessageMediaApiTestsSecret");
-                    client = new MessageMediaMessagesClient();
+					Configuration.BasicAuthUserName = Environment.GetEnvironmentVariable("MessageMediaApiTestsKey");
+					Configuration.BasicAuthPassword = Environment.GetEnvironmentVariable("MessageMediaApiTestsSecret");
+					client = new MessageMediaMessagesClient();
 				}
 
 				return client;

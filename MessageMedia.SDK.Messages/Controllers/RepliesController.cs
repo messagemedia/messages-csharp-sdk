@@ -4,18 +4,12 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Converters;
 using APIMATIC.SDK.Common;
 using APIMATIC.SDK.Http.Request;
 using APIMATIC.SDK.Http.Response;
 using APIMATIC.SDK.Http.Client;
-using System.Net;
 
 namespace MessageMedia.Messages.Controllers
 {
@@ -99,49 +93,49 @@ namespace MessageMedia.Messages.Controllers
 		public async Task<dynamic> CreateConfirmRepliesAsReceivedAsync(Models.ConfirmRepliesAsReceivedRequest body, string accountHeaderValue = null)
         {
             //the base uri for api requests
-            string _baseUri = Configuration.BaseUri;
-			string _methodUri = "/v1/replies/confirmed";
+            string baseUri = Configuration.BaseUri;
+			string methodUri = "/v1/replies/confirmed";
 
 			//prepare query string for API call
-			StringBuilder _queryBuilder = new StringBuilder(_baseUri);
-            _queryBuilder.Append(_methodUri);
+			StringBuilder queryBuilder = new StringBuilder(baseUri);
+            queryBuilder.Append(methodUri);
 
 
             //validate and preprocess url
-            string _queryUrl = APIHelper.CleanUrl(_queryBuilder);
+            string queryUrl = APIHelper.CleanUrl(queryBuilder);
 
             //append request with appropriate headers and parameters
-            var _headers = new Dictionary<string,string>()
+            var headers = new Dictionary<string,string>()
             {
-                { "user-agent", "messagemedia-messages-csharp-sdk-1.0.0" },
-                { "accept", "application/json" },
+				{ "user-agent", SdkVersion },
+				{ "accept", "application/json" },
                 { "content-type", "application/json; charset=utf-8" }
             };
 
 			//append body params
-			var _body = APIHelper.JsonSerialize(body);
+			var jsonBody = APIHelper.JsonSerialize(body);
 
 			//prepare the API call request to fetch the response
-			HttpRequest _request = PostHttpRequest(_queryUrl, _headers, _body);
+			HttpRequest request = PostHttpRequest(queryUrl, headers, jsonBody);
 
             //invoke request and get response
-            HttpStringResponse _response = (HttpStringResponse) await ClientInstance.ExecuteAsStringAsync(_request).ConfigureAwait(false);
-            HttpContext _context = new HttpContext(_request,_response);
+            HttpStringResponse response = (HttpStringResponse) await ClientInstance.ExecuteAsStringAsync(request).ConfigureAwait(false);
+            HttpContext context = new HttpContext(request,response);
 
             //Error handling using HTTP status codes
-            if (_response.StatusCode == 400)
-                throw new APIException(@"", _context);
+            if (response.StatusCode == 400)
+                throw new APIException(@"", context);
 
             //handle errors defined at the API level
-            base.ValidateResponse(_response, _context);
+            base.ValidateResponse(response, context);
 
             try
             {
-                return APIHelper.JsonDeserialize<dynamic>(_response.Body);
+                return APIHelper.JsonDeserialize<dynamic>(response.Body);
             }
             catch (Exception _ex)
             {
-                throw new APIException("Failed to parse the response: " + _ex.Message, _context);
+                throw new APIException("Failed to parse the response: " + _ex.Message, context);
             }
         }
 
@@ -295,38 +289,38 @@ namespace MessageMedia.Messages.Controllers
 		public async Task<Models.CheckRepliesResponse> GetCheckRepliesAsync(string accountHeaderValue = null)
         {
             //the base uri for api requests
-            string _baseUri = Configuration.BaseUri;
-			string _methodUri = "/v1/replies";
+            string baseUri = Configuration.BaseUri;
+			string methodUri = "/v1/replies";
 
 			//prepare query string for API call
-			StringBuilder _queryBuilder = new StringBuilder(_baseUri);
-            _queryBuilder.Append(_methodUri);
+			StringBuilder queryBuilder = new StringBuilder(baseUri);
+            queryBuilder.Append(methodUri);
 
             //validate and preprocess url
-            string _queryUrl = APIHelper.CleanUrl(_queryBuilder);
+            string queryUrl = APIHelper.CleanUrl(queryBuilder);
 
             //append request with appropriate headers and parameters
-            var _headers = new Dictionary<string,string>()
+            var headers = new Dictionary<string,string>()
             {
-                { "user-agent", "messagemedia-messages-csharp-sdk-1.0.0" },
+				{ "user-agent", SdkVersion },
 				{ "accept", "application/json" }
-            };
+			};
 
-			AddAccountHeaderTo(_headers, accountHeaderValue);
+			AddAccountHeaderTo(headers, accountHeaderValue);
 
 			//prepare the API call request to fetch the response
-			HttpRequest _request = GetHttpRequest(_queryUrl, _headers);
-			HttpStringResponse _response = (HttpStringResponse) await ClientInstance.ExecuteAsStringAsync(_request).ConfigureAwait(false);
+			HttpRequest request = GetHttpRequest(queryUrl, headers);
+			HttpStringResponse response = (HttpStringResponse) await ClientInstance.ExecuteAsStringAsync(request).ConfigureAwait(false);
 
 			//invoke request and get response
-			HttpContext _context = new HttpContext(_request,_response);
+			HttpContext context = new HttpContext(request,response);
 
 			//handle errors defined at the API level
-			base.ValidateResponse(_response, _context);
+			base.ValidateResponse(response, context);
 
 			try
 			{
-                return APIHelper.JsonDeserialize<Models.CheckRepliesResponse>(_response.Body);
+                return APIHelper.JsonDeserialize<Models.CheckRepliesResponse>(response.Body);
             }
             catch (Exception _ex)
             {
