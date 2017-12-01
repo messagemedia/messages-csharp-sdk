@@ -173,8 +173,8 @@ namespace MessageMedia.Messages
             Assert.IsNotNull(result, "Result should exist");
 
 			// Note, since we're testing the actual replies for our test account, we should be safe to test the empty replies
-            Assert.AreEqual("{\"replies\":[]}", TestHelper.ConvertStreamToString(httpCallBackHandler.Response.RawBody),
-                    "Response body should match exactly (string literal match)");
+            //Assert.AreEqual("{\"replies\":[]}", TestHelper.ConvertStreamToString(httpCallBackHandler.Response.RawBody),
+            //        "Response body should match exactly (string literal match)");
         }
 
     }
