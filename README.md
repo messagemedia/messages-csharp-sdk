@@ -1,4 +1,5 @@
-# MessageMedia.SDK.Messages C# SDK [![Travis Build Status](https://api.travis-ci.org/messagemedia/messages-csharp-sdk.svg?branch=master)](https://travis-ci.org/messagemedia/messages-csharp-sdk)
+# MessageMedia Messages C# SDK
+[![Travis Build Status](https://api.travis-ci.org/messagemedia/messages-csharp-sdk.svg?branch=master)](https://travis-ci.org/messagemedia/messages-csharp-sdk)
 The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.
 
 ## Getting Started
@@ -9,32 +10,32 @@ PM> Install-Package MessageMedia.SDK.Messages
 
 Alternatively, right-click on your solution and click "Manage NuGet Packages...", then click browse and search for MessageMedia.
 
-Next, register on [messagemedia.com](https://developers.messagemedia.com/register/) to get your API UserName and Password.
+Next, register on [developers.messagemedia.com](https://developers.messagemedia.com/register/) to get your API credentials.
 
 ## Example Usage
 
 Once you've installed the NuGet package, you need to configure your credentials.
 
 ```csharp
->			// Instantiate the client
->			MessageMediaMessagesClient client = new MessageMediaMessagesClient();
->			IRepliesController controller = client.Replies;
->
->			// Configure your credentials (Note, these can be pulled from the environment variables as well)
->			Configuration.BasicAuthUserName = "Your MessageMedia API UserName here";
->			Configuration.BasicAuthPassword = "Your MessageMedia API Password here";
->
->			// Perform API call
->			CheckRepliesResponse result = null;
->
->			try
->			{
->               result = await controller.GetCheckRepliesAsync();
->			}
->			catch(APIException exception)
->			{
->				Console.WriteLine("An error occured: " + exception.Message);
->			};
+// Instantiate the client
+MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+IRepliesController controller = client.Replies;
+
+// Configure your credentials (Note, these can be pulled from the environment variables as well)
+Configuration.BasicAuthUserName = "Your MessageMedia API Key here";
+Configuration.BasicAuthPassword = "Your MessageMedia API Secret here";
+
+// Perform API call
+CheckRepliesResponse result = null;
+
+try
+{
+    result = await controller.GetCheckRepliesAsync();
+}
+catch(APIException exception)
+{
+    Console.WriteLine("An error occured: " + exception.Message);
+};
 ```
 
 ### Authentication
