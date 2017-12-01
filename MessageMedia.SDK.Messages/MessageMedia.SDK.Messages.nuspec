@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>MessageMedia.SDK.Messages</id>
+    <version>1.1.0</version>
+    <title>MessageMedia Messages SDK</title>
+    <authors>MessageMedia Developers</authors>
+    <owners>MessageMedia</owners>
+    <projectUrl>https://developers.messagemedia.com/</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/messagemedia/messages-csharp-sdk/master/mm-logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.</description>
+    <summary>MessageMedia Messages SDK</summary>
+    <releaseNotes>First release of MessageMedia Messages C# SDK</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <language>en-US</language>
+    <tags>web messaging sms</tags>
+    <dependencies>
+      <dependency id="APIMATIC.SDK.Common" version="2.1.0.0" />
+      <dependency id="Newtonsoft.Json" version="10.0.3"/>
+      <dependency id="Microsoft.Bcl.Async" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\readme.md" target="" />
+
+    <!-- symbol server support-->
+    <file src="**\*.cs" target="src\" exclude="**\obj\**"/>
+
+    <!-- Assemblies and documentation-->
+    <file src="bin\Release\net45\MessageMedia.SDK.Messages.dll" target="lib\net45\MessageMedia.SDK.Messages.dll" />
+    <file src="bin\Release\net45\MessageMedia.SDK.Messages.xml" target="lib\net45\MessageMedia.SDK.Messages.xml" />
+    <file src="bin\Release\net45\MessageMedia.SDK.Messages.pdb" target="lib\net45\MessageMedia.SDK.Messages.pdb" />
+    <file src="bin\Release\netstandard1.3\MessageMedia.SDK.Messages.dll" target="lib\netstandard1.3\MessageMedia.SDK.Messages.dll" />
+    <file src="bin\Release\netstandard1.3\MessageMedia.SDK.Messages.xml" target="lib\netstandard1.3\MessageMedia.SDK.Messages.xml" />
+    <file src="bin\Release\netstandard1.3\MessageMedia.SDK.Messages.pdb" target="lib\netstandard1.3\MessageMedia.SDK.Messages.pdb" />
+  </files>
+</package>

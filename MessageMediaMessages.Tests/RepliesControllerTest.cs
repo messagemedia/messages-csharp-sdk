@@ -2,19 +2,13 @@
  * MessageMediaMessages.Tests
  *
  */
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Converters;
 using APIMATIC.SDK.Common; 
-using APIMATIC.SDK.Http.Client;
-using APIMATIC.SDK.Http.Response;
 using MessageMedia.Messages.Helpers;
 using NUnit.Framework;
-using MessageMedia.Messages;
 using MessageMedia.Messages.Controllers;
+using MessageMedia.Messages.Models;
 
 namespace MessageMedia.Messages
 {
@@ -57,7 +51,7 @@ namespace MessageMedia.Messages
         public async Task TestConfirmRepliesAsReceived1() 
         {
             // Parameters for the API call
-            Messages.Models.ConfirmRepliesAsReceivedRequest body = APIHelper.JsonDeserialize<Messages.Models.ConfirmRepliesAsReceivedRequest>("{    \"reply_ids\": [        \"011dcead-6988-4ad6-a1c7-6b6c68ea628d\",        \"3487b3fa-6586-4979-a233-2d1b095c7718\",        \"ba28e94b-c83d-4759-98e7-ff9c7edb87a1\"    ]}");
+            ConfirmRepliesAsReceivedRequest body = APIHelper.JsonDeserialize<ConfirmRepliesAsReceivedRequest>("{    \"reply_ids\": [        \"011dcead-6988-4ad6-a1c7-6b6c68ea628d\",        \"3487b3fa-6586-4979-a233-2d1b095c7718\",        \"ba28e94b-c83d-4759-98e7-ff9c7edb87a1\"    ]}");
 
             // Perform API call
             dynamic result = null;
@@ -153,19 +147,19 @@ namespace MessageMedia.Messages
         [Test]
         public async Task TestCheckReplies1() 
         {
-
             // Perform API call
-            Messages.Models.CheckRepliesResponse result = null;
+            CheckRepliesResponse result = null;
 
             try
             {
                 result = await controller.GetCheckRepliesAsync();
             }
-            catch(APIException) {};
+            catch(APIException apiException) {
+				Assert.IsEmpty(apiException.Message);
+			};
 
             // Test response code
-            Assert.AreEqual(200, httpCallBackHandler.Response.StatusCode,
-                    "Status should be 200");
+            Assert.AreEqual(200, httpCallBackHandler.Response.StatusCode, "Status should be 200");
 
             // Test headers
             Dictionary<string, string> headers = new Dictionary<string, string>();
@@ -178,8 +172,8 @@ namespace MessageMedia.Messages
             // Test whether the captured response is as we expected
             Assert.IsNotNull(result, "Result should exist");
 
-            Assert.AreEqual("{  \"replies\": [    {      \"metadata\": {        \"key1\": \"value1\",        \"key2\": \"value2\"      },      \"message_id\": \"877c19ef-fa2e-4cec-827a-e1df9b5509f7\",      \"reply_id\": \"a175e797-2b54-468b-9850-41a3eab32f74\",      \"date_received\": \"2016-12-07T08:43:00.850Z\",      \"callback_url\": \"https://my.callback.url.com\",      \"destination_number\": \"+61491570156\",      \"source_number\": \"+61491570157\",      \"vendor_account_id\": {        \"vendor_id\": \"MessageMedia\",        \"account_id\": \"MyAccount\"      },      \"content\": \"My first reply!\"    },    {      \"metadata\": {        \"key1\": \"value1\",        \"key2\": \"value2\"      },      \"message_id\": \"8f2f5927-2e16-4f1c-bd43-47dbe2a77ae4\",      \"reply_id\": \"3d8d53d8-01d3-45dd-8cfa-4dfc81600f7f\",      \"date_received\": \"2016-12-07T08:43:00.850Z\",      \"callback_url\": \"https://my.callback.url.com\",      \"destination_number\": \"+61491570157\",      \"source_number\": \"+61491570158\",      \"vendor_account_id\": {        \"vendor_id\": \"MessageMedia\",        \"account_id\": \"MyAccount\"      },      \"content\": \"My second reply!\"    }  ]}", 
-                    TestHelper.ConvertStreamToString(httpCallBackHandler.Response.RawBody),
+			// Note, since we're testing the actual replies for our test account, we should be safe to test the empty replies
+            Assert.AreEqual("{\"replies\":[]}", TestHelper.ConvertStreamToString(httpCallBackHandler.Response.RawBody),
                     "Response body should match exactly (string literal match)");
         }
 

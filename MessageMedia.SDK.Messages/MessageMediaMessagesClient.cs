@@ -44,6 +44,7 @@ namespace MessageMedia.Messages
                 return RepliesController.Instance;
             }
         }
+
         /// <summary>
         /// The shared http client to use for all API calls
         /// </summary>
@@ -58,7 +59,9 @@ namespace MessageMedia.Messages
                 BaseController.ClientInstance = value;
             }        
         }
+
         #region Constructors
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -67,11 +70,21 @@ namespace MessageMedia.Messages
         /// <summary>
         /// Client initialization constructor
         /// </summary>
-        public MessageMediaMessagesClient(string basicAuthUserName, string basicAuthPassword)
+        public MessageMediaMessagesClient(string basicAuthUserName, string basicAuthPassword, bool hmacAuthentication = false)
         {
-            Configuration.BasicAuthUserName = basicAuthUserName;
-            Configuration.BasicAuthPassword = basicAuthPassword;
-        }
-        #endregion
-    }
+			if(!hmacAuthentication)
+			{
+				Configuration.BasicAuthUserName = basicAuthUserName;
+				Configuration.BasicAuthPassword = basicAuthPassword;
+			}
+			else
+			{
+				Configuration.HmacAuthUserName = basicAuthUserName;
+				Configuration.HmacAuthPassword = basicAuthPassword;
+			}
+		}
+
+		#endregion
+
+	}
 }

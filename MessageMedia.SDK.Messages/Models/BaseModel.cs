@@ -3,12 +3,11 @@
  *
  */
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using Newtonsoft.Json;
+
 namespace MessageMedia.Messages.Models
 {
-    public class BaseModel : INotifyPropertyChanged
+	public class BaseModel : INotifyPropertyChanged
     {
 
         /// <summary>

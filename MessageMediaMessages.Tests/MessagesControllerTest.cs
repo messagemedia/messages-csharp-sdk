@@ -4,21 +4,17 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Converters;
-using APIMATIC.SDK.Common; 
-using APIMATIC.SDK.Http.Client;
-using APIMATIC.SDK.Http.Response;
+using Newtonsoft.Json.Linq;
+using APIMATIC.SDK.Common;
 using MessageMedia.Messages.Helpers;
 using NUnit.Framework;
-using MessageMedia.Messages;
 using MessageMedia.Messages.Controllers;
+using MessageMedia.Messages.Models;
 
 namespace MessageMedia.Messages
 {
-    [TestFixture]
+	[TestFixture]
     public class MessagesControllerTest : ControllerTestBase
     {
         /// <summary>
@@ -103,10 +99,10 @@ namespace MessageMedia.Messages
         public async Task TestSendMessages1() 
         {
             // Parameters for the API call
-            Messages.Models.SendMessagesRequest body = APIHelper.JsonDeserialize<Messages.Models.SendMessagesRequest>("{    \"messages\": [        {            \"callback_url\": \"https://my.callback.url.com\",            \"content\": \"My first message\",            \"destination_number\": \"+61491570156\",            \"delivery_report\": true,            \"format\": \"SMS\",            \"message_expiry_timestamp\": \"2016-11-03T11:49:02.807Z\",            \"metadata\": {                \"key1\": \"value1\",                \"key2\": \"value2\"            },            \"scheduled\": \"2016-11-03T11:49:02.807Z\",            \"source_number\": \"+61491570157\",            \"source_number_type\": \"INTERNATIONAL\"        },        {            \"callback_url\": \"https://my.callback.url.com\",            \"content\": \"My second message\",            \"destination_number\": \"+61491570158\",            \"delivery_report\": true,            \"format\": \"SMS\",            \"message_expiry_timestamp\": \"2016-11-03T11:49:02.807Z\",            \"metadata\": {                \"key1\": \"value1\",                \"key2\": \"value2\"            },            \"scheduled\": \"2016-11-03T11:49:02.807Z\",            \"source_number\": \"+61491570159\",            \"source_number_type\": \"INTERNATIONAL\"        }    ]}");
+            SendMessagesRequest body = APIHelper.JsonDeserialize<Models.SendMessagesRequest>("{    \"messages\": [        {            \"callback_url\": \"https://my.callback.url.com\",            \"content\": \"My first message\",            \"destination_number\": \"+61491570156\",            \"delivery_report\": true,            \"format\": \"SMS\",            \"message_expiry_timestamp\": \"2016-11-03T11:49:02.807Z\",            \"metadata\": {                \"key1\": \"value1\",                \"key2\": \"value2\"            },            \"scheduled\": \"2016-11-03T11:49:02.807Z\",            \"source_number\": \"+61491570157\",            \"source_number_type\": \"INTERNATIONAL\"        },        {            \"callback_url\": \"https://my.callback.url.com\",            \"content\": \"My second message\",            \"destination_number\": \"+61491570158\",            \"delivery_report\": true,            \"format\": \"SMS\",            \"message_expiry_timestamp\": \"2016-11-03T11:49:02.807Z\",            \"metadata\": {                \"key1\": \"value1\",                \"key2\": \"value2\"            },            \"scheduled\": \"2016-11-03T11:49:02.807Z\",            \"source_number\": \"+61491570159\",            \"source_number_type\": \"INTERNATIONAL\"        }    ]}");
 
             // Perform API call
-            Messages.Models.SendMessagesResponse result = null;
+            SendMessagesResponse result = null;
 
             try
             {
@@ -115,24 +111,83 @@ namespace MessageMedia.Messages
             catch(APIException) {};
 
             // Test response code
-            Assert.AreEqual(202, httpCallBackHandler.Response.StatusCode,
-                    "Status should be 202");
+            Assert.AreEqual(202, httpCallBackHandler.Response.StatusCode, "Status should be 202");
 
             // Test headers
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("Content-Type", null);
 
-            Assert.IsTrue(TestHelper.AreHeadersProperSubsetOf (
-                    headers, httpCallBackHandler.Response.Headers),
-                    "Headers should match");
+            Assert.IsTrue(TestHelper.AreHeadersProperSubsetOf(headers, httpCallBackHandler.Response.Headers), "Headers should match");
 
             // Test whether the captured response is as we expected
             Assert.IsNotNull(result, "Result should exist");
 
-            Assert.AreEqual("{  \"messages\": [    {      \"message_id\": \"04fe9a97-a579-43c5-bb1a-58ed29bf0a6a\",      \"callback_url\": \"https://my.url.com\",      \"status\": \"delivered\",      \"content\": \"My first message\",      \"destination_number\": \"+61491570156\",      \"delivery_report\": true,      \"format\": \"SMS\",      \"message_expiry_timestamp\": \"2016-11-03T11:49:02.807Z\",      \"metadata\": {        \"key1\": \"value1\",        \"key2\": \"value2\"      },      \"scheduled\": \"2016-11-03T11:49:02.807Z\",      \"source_number\": \"+61491570157\",      \"source_number_type\": \"INTERNATIONAL\"    }  ]}", 
-                    TestHelper.ConvertStreamToString(httpCallBackHandler.Response.RawBody),
-                    "Response body should match exactly (string literal match)");
-        }
+			dynamic messages  = result.Messages;//JObject.Parse(TestHelper.ConvertStreamToString(httpCallBackHandler.Response.RawBody));
+			int count = (int)messages.Count;
 
-    }
+			Assert.AreEqual(count, 2);
+
+			dynamic firstMessage = messages[0];
+			dynamic secondMessage = messages[1];
+
+			AssertSendMessageResponseValid(firstMessage, "SMS", "My first message", "https://my.callback.url.com", true, "+61491570156", "+61491570157", "queued");
+			AssertSendMessageResponseValid(secondMessage, "SMS", "My second message", "https://my.callback.url.com", true, "+61491570158", "+61491570159", "queued");
+		}
+
+		private void AssertSendMessageResponseValid(dynamic message, string expectedFormat, string expectedContent, string expectedCallbackUrl, 
+			bool expectedDeliveryReport, string expectedDestinationNumber, string expectedSourceNumber, string expectedStatus)
+		{
+			var format = (string)message.format;
+			var content = (string)message.content;
+			var callbackUrl = (string)message.callback_url;
+			var deliveryReport = (bool)message.delivery_report;
+			var destinationNumber = (string)message.destination_number;
+			var sourceNumber = (string)message.source_number;
+			var status = (string)message.status;
+			var messageId = (string)message.message_id;
+			var messageExpiry = (string)message.message_expiry_timestamp;
+			var scheduled = (string)message.scheduled;
+
+			Assert.AreEqual(format, expectedFormat, "Format should match exactly (string literal match)");
+			Assert.AreEqual(content, expectedContent, "Content should match exactly (string literal match)");
+			Assert.AreEqual(callbackUrl, expectedCallbackUrl, "Callback URL should match exactly (string literal match)");
+			Assert.AreEqual(deliveryReport, expectedDeliveryReport, "Delivery Report should match exactly (boolean match)");
+			Assert.AreEqual(destinationNumber, expectedDestinationNumber, "Destination Number should match exactly (string literal match)");
+			Assert.AreEqual(sourceNumber, expectedSourceNumber, "Source Number should match exactly (string literal match)");
+			Assert.AreEqual(status, expectedStatus, "Status should match exactly (string literal match)");
+
+			// note, these are non-deterministic, so we only check for their existence.
+			Assert.IsNotEmpty(messageId, "Message ID should not be empty.");
+			Assert.IsNotEmpty(messageExpiry, "Message Expiry should not be empty.");
+			Assert.IsNotEmpty(scheduled, "Scheduled time should not be empty.");
+
+			DateTime date;
+			bool canParse = DateTime.TryParse(messageExpiry, out date);
+
+			Assert.IsTrue(canParse, "Message Expiry must be a valid DateTime");
+
+			canParse = DateTime.TryParse(scheduled, out date);
+			Assert.IsTrue(canParse, "Scheduled time must be a valid DateTime");
+
+			JObject metadata = message.metadata as JObject;
+
+			Assert.IsNotNull(metadata, "Metadata must not be null.");
+
+			var metadataCount = metadata.Count;
+
+			Assert.AreEqual(metadataCount, 2, "Metadata must have two children.");
+
+			var firstKey = ((dynamic)metadata).key1;
+			var secondKey = ((dynamic)metadata).key2;
+
+			Assert.IsNotNull(firstKey, "Metadata must contain key1.");
+			Assert.IsNotNull(secondKey, "Metadata must contain key2.");
+
+			var firstKeyValue = (string)firstKey;
+			var secondKeyValue = (string)secondKey;
+
+			Assert.AreEqual(firstKeyValue, "value1", "key1 must equal value1.");
+			Assert.AreEqual(secondKeyValue, "value2", "key2 must equal value1.");
+		}
+	}
 }

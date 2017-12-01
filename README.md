@@ -1,85 +1,61 @@
-# Getting started
-
+# MessageMedia.SDK.Messages C# SDK [![Travis Build Status](https://api.travis-ci.org/messagemedia/messages-csharp-sdk.svg?branch=master)](https://travis-ci.org/messagemedia/messages-csharp-sdk)
 The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.
 
-## How to Build
+## Getting Started
 
-The generated code uses the Newtonsoft Json.NET NuGet Package. If the automatic NuGet package restore
-is enabled, these dependencies will be installed automatically. Therefore,
-you will need internet access for build.
+Make sure you install the NuGet package into your solution:
 
-1. Open the solution (MessageMediaMessages.sln) file.
-2. Invoke the build process using `Ctrl+Shift+B` shortcut key or using the `Build` menu as shown below.
+PM> Install-Package MessageMedia.SDK.Messages
 
-![Building SDK using Visual Studio](https://apidocs.io/illustration/cs?step=buildSDK&workspaceFolder=MessageMediaMessages-CSharp&workspaceName=MessageMediaMessages&projectName=MessageMediaMessages.Tests)
+Alternatively, right-click on your solution and click "Manage NuGet Packages...", then click browse and search for MessageMedia.
 
-## How to Use
+Next, register on [messagemedia.com](https://developers.messagemedia.com/register/) to get your API UserName and Password.
 
-The build process generates a portable class library, which can be used like a normal class library. The generated library is compatible with Windows Forms, Windows RT, Windows Phone 8,
-Silverlight 5, Xamarin iOS, Xamarin Android and Mono. More information on how to use can be found at the [MSDN Portable Class Libraries documentation](http://msdn.microsoft.com/en-us/library/vstudio/gg597391%28v=vs.100%29.aspx).
+## Example Usage
 
-The following section explains how to use the MessageMediaMessages library in a new console project.
+Once you've installed the NuGet package, you need to configure your credentials.
 
-### 1. Starting a new project
-
-For starting a new project, right click on the current solution from the *solution explorer* and choose  ``` Add -> New Project ```.
-
-![Add a new project in the existing solution using Visual Studio](https://apidocs.io/illustration/cs?step=addProject&workspaceFolder=MessageMediaMessages-CSharp&workspaceName=MessageMediaMessages&projectName=MessageMediaMessages.Tests)
-
-Next, choose "Console Application", provide a ``` TestConsoleProject ``` as the project name and click ``` OK ```.
-
-![Create a new console project using Visual Studio](https://apidocs.io/illustration/cs?step=createProject&workspaceFolder=MessageMediaMessages-CSharp&workspaceName=MessageMediaMessages&projectName=MessageMediaMessages.Tests)
-
-### 2. Set as startup project
-
-The new console project is the entry point for the eventual execution. This requires us to set the ``` TestConsoleProject ``` as the start-up project. To do this, right-click on the  ``` TestConsoleProject ``` and choose  ``` Set as StartUp Project ``` form the context menu.
-
-![Set the new cosole project as the start up project](https://apidocs.io/illustration/cs?step=setStartup&workspaceFolder=MessageMediaMessages-CSharp&workspaceName=MessageMediaMessages&projectName=MessageMediaMessages.Tests)
-
-### 3. Add reference of the library project
-
-In order to use the MessageMediaMessages library in the new project, first we must add a projet reference to the ``` TestConsoleProject ```. First, right click on the ``` References ``` node in the *solution explorer* and click ``` Add Reference... ```.
-
-![Open references of the TestConsoleProject](https://apidocs.io/illustration/cs?step=addReference&workspaceFolder=MessageMediaMessages-CSharp&workspaceName=MessageMediaMessages&projectName=MessageMediaMessages.Tests)
-
-Next, a window will be displayed where we must set the ``` checkbox ``` on ``` MessageMediaMessages.Tests ``` and click ``` OK ```. By doing this, we have added a reference of the ```MessageMediaMessages.Tests``` project into the new ``` TestConsoleProject ```.
-
-![Add a reference to the TestConsoleProject](https://apidocs.io/illustration/cs?step=createReference&workspaceFolder=MessageMediaMessages-CSharp&workspaceName=MessageMediaMessages&projectName=MessageMediaMessages.Tests)
-
-### 4. Write sample code
-
-Once the ``` TestConsoleProject ``` is created, a file named ``` Program.cs ``` will be visible in the *solution explorer* with an empty ``` Main ``` method. This is the entry point for the execution of the entire solution.
-Here, you can add code to initialize the client library and acquire the instance of a *Controller* class. Sample code to initialize the client library and using controller methods is given in the subsequent sections.
-
-![Add a reference to the TestConsoleProject](https://apidocs.io/illustration/cs?step=addCode&workspaceFolder=MessageMediaMessages-CSharp&workspaceName=MessageMediaMessages&projectName=MessageMediaMessages.Tests)
-
-## How to Test
-
-The generated SDK also contain one or more Tests, which are contained in the Tests project.
-In order to invoke these test cases, you will need *NUnit 3.0 Test Adapter Extension for Visual Studio*.
-Once the SDK is complied, the test cases should appear in the Test Explorer window.
-Here, you can click *Run All* to execute these test cases.
-
-## Initialization
+```csharp
+>			// Instantiate the client
+>			MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+>			IRepliesController controller = client.Replies;
+>
+>			// Configure your credentials (Note, these can be pulled from the environment variables as well)
+>			Configuration.BasicAuthUserName = "Your MessageMedia API UserName here";
+>			Configuration.BasicAuthPassword = "Your MessageMedia API Password here";
+>
+>			// Perform API call
+>			CheckRepliesResponse result = null;
+>
+>			try
+>			{
+>               result = await controller.GetCheckRepliesAsync();
+>			}
+>			catch(APIException exception)
+>			{
+>				Console.WriteLine("An error occured: " + exception.Message);
+>			};
+```
 
 ### Authentication
-In order to setup authentication and initialization of the API client, you need the following information.
+In order to setup authentication for the API client, you need the two of the following, depending on your preferred authentication method.
 
 | Parameter | Description |
 |-----------|-------------|
 | basicAuthUserName | The username to use with basic authentication |
 | basicAuthPassword | The password to use with basic authentication |
+| hmacAuthUserName | The username to use with HMAC authentication |
+| hmacAuthPassword | The password to use with HMAC authentication |
 
-
-
-API client can be initialized as following.
+API client can be initialized using:
 
 ```csharp
 // Configuration parameters and credentials
-string basicAuthUserName = "basicAuthUserName"; // The username to use with basic authentication
-string basicAuthPassword = "basicAuthPassword"; // The password to use with basic authentication
+string hmacAuthUserName = "hmacAuthUserName"; // The username to use with HMAC authentication
+string hmacAuthPassword = "hmacAuthPassword"; // The password to use with HMAC authentication
+bool useHmacAuthentication = true;
 
-MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword);
+MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
 ```
 
 
@@ -579,13 +555,8 @@ Task<Messages.Models.CheckRepliesResponse> GetCheckReplies()
 #### Example Usage
 
 ```csharp
-
 Messages.Models.CheckRepliesResponse result = await replies.GetCheckReplies();
-
 ```
 
 
 [Back to List of Controllers](#list_of_controllers)
-
-
-

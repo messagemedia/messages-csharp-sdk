@@ -2,23 +2,17 @@
  * MessageMediaMessages.Tests
  *
  */
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Converters;
-using APIMATIC.SDK.Common; 
-using APIMATIC.SDK.Http.Client;
-using APIMATIC.SDK.Http.Response;
+using APIMATIC.SDK.Common;
 using MessageMedia.Messages.Helpers;
 using NUnit.Framework;
-using MessageMedia.Messages;
 using MessageMedia.Messages.Controllers;
+using MessageMedia.Messages.Models;
 
 namespace MessageMedia.Messages
 {
-    [TestFixture]
+	[TestFixture]
     public class DeliveryReportsControllerTest : ControllerTestBase
     {
         /// <summary>
@@ -105,9 +99,8 @@ namespace MessageMedia.Messages
         [Test]
         public async Task TestCheckDeliveryReports1() 
         {
-
             // Perform API call
-            Messages.Models.CheckDeliveryReportsResponse result = null;
+            CheckDeliveryReportsResponse result = null;
 
             try
             {
@@ -129,10 +122,6 @@ namespace MessageMedia.Messages
 
             // Test whether the captured response is as we expected
             Assert.IsNotNull(result, "Result should exist");
-
-            Assert.AreEqual("{    \"delivery_reports\": [        {            \"callback_url\": \"https://my.callback.url.com\",            \"delivery_report_id\": \"01e1fa0a-6e27-4945-9cdb-18644b4de043\",            \"source_number\": \"+61491570157\",            \"date_received\": \"2017-05-20T06:30:37.642Z\",            \"status\": \"enroute\",            \"delay\": 0,            \"submitted_date\": \"2017-05-20T06:30:37.639Z\",            \"original_text\": \"My first message!\",            \"message_id\": \"d781dcab-d9d8-4fb2-9e03-872f07ae94ba\",            \"vendor_account_id\": {                \"vendor_id\": \"MessageMedia\",                \"account_id\": \"MyAccount\"            },            \"metadata\": {                \"key1\": \"value1\",                \"key2\": \"value2\"            }        },        {            \"callback_url\": \"https://my.callback.url.com\",            \"delivery_report_id\": \"0edf9022-7ccc-43e6-acab-480e93e98c1b\",            \"source_number\": \"+61491570158\",            \"date_received\": \"2017-05-21T01:46:42.579Z\",            \"status\": \"enroute\",            \"delay\": 0,            \"submitted_date\": \"2017-05-21T01:46:42.574Z\",            \"original_text\": \"My second message!\",            \"message_id\": \"fbb3b3f5-b702-4d8b-ab44-65b2ee39a281\",            \"vendor_account_id\": {                \"vendor_id\": \"MessageMedia\",                \"account_id\": \"MyAccount\"            },            \"metadata\": {                \"key1\": \"value1\",                \"key2\": \"value2\"            }        }    ]}", 
-                    TestHelper.ConvertStreamToString(httpCallBackHandler.Response.RawBody),
-                    "Response body should match exactly (string literal match)");
         }
 
         /// <summary>
@@ -157,7 +146,7 @@ namespace MessageMedia.Messages
         public async Task TestConfirmDeliveryReportsAsReceived1() 
         {
             // Parameters for the API call
-            Messages.Models.ConfirmDeliveryReportsAsReceivedRequest body = APIHelper.JsonDeserialize<Messages.Models.ConfirmDeliveryReportsAsReceivedRequest>("{    \"delivery_report_ids\": [        \"011dcead-6988-4ad6-a1c7-6b6c68ea628d\",        \"3487b3fa-6586-4979-a233-2d1b095c7718\",        \"ba28e94b-c83d-4759-98e7-ff9c7edb87a1\"    ]}");
+            ConfirmDeliveryReportsAsReceivedRequest body = APIHelper.JsonDeserialize<Models.ConfirmDeliveryReportsAsReceivedRequest>("{    \"delivery_report_ids\": [        \"011dcead-6988-4ad6-a1c7-6b6c68ea628d\",        \"3487b3fa-6586-4979-a233-2d1b095c7718\",        \"ba28e94b-c83d-4759-98e7-ff9c7edb87a1\"    ]}");
 
             // Perform API call
             dynamic result = null;
