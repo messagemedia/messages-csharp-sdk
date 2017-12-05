@@ -1,5 +1,5 @@
 # MessageMedia Messages C# SDK
-[![Travis Build Status](https://api.travis-ci.org/messagemedia/messages-csharp-sdk.svg?branch=master)](https://travis-ci.org/messagemedia/messages-csharp-sdk)
+[![Travis Build Status](https://api.travis-ci.org/messagemedia/messages-csharp-sdk.svg?branch=master)](https://travis-ci.org/messagemedia/messages-csharp-sdk)[![NuGet](https://img.shields.io/nuget/dt/MessageMedia.SDK.Messages.svg)]()
 
 The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.
 
