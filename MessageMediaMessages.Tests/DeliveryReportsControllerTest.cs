@@ -124,25 +124,46 @@ namespace MessageMedia.Messages
             Assert.IsNotNull(result, "Result should exist");
         }
 
-        /// <summary>
-        /// Mark a delivery report as confirmed so it is no longer return in check delivery reports requests.
-        ///The confirm delivery reports endpoint is intended to be used in conjunction with the check delivery
-        ///reports endpoint to allow for robust processing of delivery reports. Once one or more delivery
-        ///reports have been processed, they can then be confirmed using the confirm delivery reports endpoint so they
-        ///are no longer returned in subsequent check delivery reports requests.
-        ///The confirm delivery reports endpoint takes a list of delivery report IDs as follows:
-        ///```json
-        ///{
-        ///    "delivery_report_ids": [
-        ///        "011dcead-6988-4ad6-a1c7-6b6c68ea628d",
-        ///        "3487b3fa-6586-4979-a233-2d1b095c7718",
-        ///        "ba28e94b-c83d-4759-98e7-ff9c7edb87a1"
-        ///    ]
-        ///}
-        ///```
-        ///Up to 100 delivery reports can be confirmed in a single confirm delivery reports request. 
-        /// </summary>
-        [Test]
+		/// <summary>
+		/// Make sure our SDK fails when passed an invalid account id
+		/// </summary>
+		/// <returns></returns>
+		[Test]
+		public async Task TestCheckDeliveryReportsWithInvalidAccount()
+		{
+			// Perform API call
+			dynamic result = null;
+
+			try
+			{
+				 await controller.GetCheckDeliveryReportsAsync("INVALID ACCOUNT");
+			}
+			catch (APIException apiException)
+			{
+				Assert.AreEqual("HTTP Response Not OK. {\"message\":\"Invalid account 'INVALID ACCOUNT' in header Account\"}\n", apiException.Message);
+				Assert.AreEqual(403, httpCallBackHandler.Response.StatusCode, "Status should be 403");
+			};
+		}
+
+		/// <summary>
+		/// Mark a delivery report as confirmed so it is no longer return in check delivery reports requests.
+		///The confirm delivery reports endpoint is intended to be used in conjunction with the check delivery
+		///reports endpoint to allow for robust processing of delivery reports. Once one or more delivery
+		///reports have been processed, they can then be confirmed using the confirm delivery reports endpoint so they
+		///are no longer returned in subsequent check delivery reports requests.
+		///The confirm delivery reports endpoint takes a list of delivery report IDs as follows:
+		///```json
+		///{
+		///    "delivery_report_ids": [
+		///        "011dcead-6988-4ad6-a1c7-6b6c68ea628d",
+		///        "3487b3fa-6586-4979-a233-2d1b095c7718",
+		///        "ba28e94b-c83d-4759-98e7-ff9c7edb87a1"
+		///    ]
+		///}
+		///```
+		///Up to 100 delivery reports can be confirmed in a single confirm delivery reports request. 
+		/// </summary>
+		[Test]
         public async Task TestConfirmDeliveryReportsAsReceived1() 
         {
             // Parameters for the API call
@@ -171,5 +192,28 @@ namespace MessageMedia.Messages
 
         }
 
-    }
+		/// <summary>
+		/// Make sure our SDK fails when passed an invalid account id
+		/// </summary>
+		/// <returns></returns>
+		[Test]
+		public async Task TestConfirmDeliveryReportsAsReceivedWithInvalidAccount()
+		{
+			// Parameters for the API call
+			ConfirmDeliveryReportsAsReceivedRequest body = APIHelper.JsonDeserialize<Models.ConfirmDeliveryReportsAsReceivedRequest>("{    \"delivery_report_ids\": [        \"011dcead-6988-4ad6-a1c7-6b6c68ea628d\",        \"3487b3fa-6586-4979-a233-2d1b095c7718\",        \"ba28e94b-c83d-4759-98e7-ff9c7edb87a1\"    ]}");
+
+			// Perform API call
+			dynamic result = null;
+
+			try
+			{
+				result = await controller.CreateConfirmDeliveryReportsAsReceivedAsync(body, "INVALID ACCOUNT");
+			}
+			catch (APIException apiException)
+			{
+				Assert.AreEqual("HTTP Response Not OK. {\"message\":\"Invalid account 'INVALID ACCOUNT' in header Account\"}\n", apiException.Message);
+				Assert.AreEqual(403, httpCallBackHandler.Response.StatusCode, "Status should be 403");
+			};
+		}
+	}
 }

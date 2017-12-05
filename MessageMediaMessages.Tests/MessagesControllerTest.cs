@@ -134,6 +134,30 @@ namespace MessageMedia.Messages
 			AssertSendMessageResponseValid(secondMessage, "SMS", "My second message", "https://my.callback.url.com", true, "+61491570158", "+61491570159", "queued");
 		}
 
+		/// <summary>
+		/// Make sure our SDK fails when passed an invalid account id
+		/// </summary>
+		/// <returns></returns>
+		[Test]
+		public async Task TestConfirmDeliveryReportsAsReceivedWithInvalidAccount()
+		{
+			// Parameters for the API call
+			SendMessagesRequest body = APIHelper.JsonDeserialize<SendMessagesRequest>("{    \"messages\": [        {            \"callback_url\": \"https://my.callback.url.com\",            \"content\": \"My first message\",            \"destination_number\": \"+61491570156\",            \"delivery_report\": true,            \"format\": \"SMS\",            \"message_expiry_timestamp\": \"2016-11-03T11:49:02.807Z\",            \"metadata\": {                \"key1\": \"value1\",                \"key2\": \"value2\"            },            \"scheduled\": \"2016-11-03T11:49:02.807Z\",            \"source_number\": \"+61491570157\",            \"source_number_type\": \"INTERNATIONAL\"        },        {            \"callback_url\": \"https://my.callback.url.com\",            \"content\": \"My second message\",            \"destination_number\": \"+61491570158\",            \"delivery_report\": true,            \"format\": \"SMS\",            \"message_expiry_timestamp\": \"2016-11-03T11:49:02.807Z\",            \"metadata\": {                \"key1\": \"value1\",                \"key2\": \"value2\"            },            \"scheduled\": \"2016-11-03T11:49:02.807Z\",            \"source_number\": \"+61491570159\",            \"source_number_type\": \"INTERNATIONAL\"        }    ]}");
+
+			// Perform API call
+			dynamic result = null;
+
+			try
+			{
+				result = await controller.CreateSendMessagesAsync(body, "INVALID ACCOUNT");
+			}
+			catch (APIException apiException)
+			{
+				Assert.AreEqual("HTTP Response Not OK. {\"message\":\"Invalid account 'INVALID ACCOUNT' in header Account\"}\n", apiException.Message);
+				Assert.AreEqual(403, httpCallBackHandler.Response.StatusCode, "Status should be 403");
+			};
+		}
+
 		private void AssertSendMessageResponseValid(dynamic message, string expectedFormat, string expectedContent, string expectedCallbackUrl, 
 			bool expectedDeliveryReport, string expectedDestinationNumber, string expectedSourceNumber, string expectedStatus)
 		{
