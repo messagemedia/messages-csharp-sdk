@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>MessageMedia.SDK.Messages</id>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <title>MessageMedia Messages SDK</title>
     <authors>MessageMedia Developers</authors>
     <owners>MessageMedia</owners>
@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.</description>
     <summary>MessageMedia Messages SDK</summary>
-    <releaseNotes>First release of MessageMedia Messages C# SDK</releaseNotes>
+    <releaseNotes>MessageMedia Messages C# SDK</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <language>en-US</language>
     <tags>web messaging sms</tags>
