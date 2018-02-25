@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>MessageMedia.SDK.Messages</id>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <title>MessageMedia Messages SDK</title>
     <authors>MessageMedia Developers</authors>
     <owners>MessageMedia</owners>
@@ -18,7 +18,6 @@
     <dependencies>
       <dependency id="APIMATIC.SDK.Common" version="2.1.0.0" />
       <dependency id="Newtonsoft.Json" version="10.0.3"/>
-      <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
     </dependencies>
   </metadata>
   <files>
