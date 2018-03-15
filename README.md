@@ -31,19 +31,20 @@ namespace TestCSharpSDK
     {
         static void Main(string[] args)
         {
-            // Instantiate the client
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
-            IMessagesController messages = client.Messages;
-
             // Configure your credentials (Note, these can be pulled from the environment variables as well)
-            Configuration.BasicAuthUserName = "YOUR_API_KEY";
-            Configuration.BasicAuthPassword = "YOUR_API_SECRET";
+            String basicAuthUserName = "YOUR_API_KEY";
+            String basicAuthPassword = "YOUR_API_SECRET";
+            bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
+            
+            // Instantiate the client
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
+            IMessagesController messages = client.Messages;
 
             // Perform API call
             string bodyValue = @"{
                                    ""messages"":[
                                       {
-                                         ""content"":""My first message"",
+                                         ""content"":""Greetings from MessageMedia!"",
                                          ""destination_number"":""YOUR_MOBILE_NUMBER""
                                       }
                                    ]
@@ -71,14 +72,14 @@ namespace TestCSharpSDK
     {
         static void Main(string[] args)
         {
-            // Instantiate the client
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
-            IMessagesController messages = client.Messages;
-
-
             // Configure your credentials (Note, these can be pulled from the environment variables as well)
-            Configuration.BasicAuthUserName = "YOUR_API_KEY";
-            Configuration.BasicAuthPassword = "YOUR_API_SECRET";
+            String basicAuthUserName = "YOUR_API_KEY";
+            String basicAuthPassword = "YOUR_API_SECRET";
+            bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
+            
+            // Instantiate the client
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
+            IMessagesController messages = client.Messages;
 
             string messageId = "YOUR_MESSAGE_ID";
             dynamic result = messages.GetMessageStatus(messageId);
@@ -104,14 +105,14 @@ namespace TestCSharpSDK
     {
         static void Main(string[] args)
         {
-            // Instantiate the client
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
-            IRepliesController replies = client.Replies;
-
-
             // Configure your credentials (Note, these can be pulled from the environment variables as well)
-            Configuration.BasicAuthUserName = "YOUR_API_KEY";
-            Configuration.BasicAuthPassword = "YOUR_API_SECRET";
+            String basicAuthUserName = "YOUR_API_KEY";
+            String basicAuthPassword = "YOUR_API_SECRET";
+            bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
+            
+            // Instantiate the client
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
+            IRepliesController replies = client.Replies;
 
             MessageMedia.Messages.Models.CheckRepliesResponse result = replies.GetCheckReplies();
 
@@ -136,14 +137,14 @@ namespace TestCSharpSDK
     {
         static void Main(string[] args)
         {
-            // Instantiate the client
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
-            IDeliveryReportsController deliveryReports = client.DeliveryReports;
-
-
             // Configure your credentials (Note, these can be pulled from the environment variables as well)
-            Configuration.BasicAuthUserName = "YOUR_API_KEY";
-            Configuration.BasicAuthPassword = "YOUR_API_SECRET";
+            String basicAuthUserName = "YOUR_API_KEY";
+            String basicAuthPassword = "YOUR_API_SECRET";
+            bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
+            
+            // Instantiate the client
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
+            IDeliveryReportsController deliveryReports = client.DeliveryReports;
 
             MessageMedia.Messages.Models.CheckDeliveryReportsResponse result = deliveryReports.GetCheckDeliveryReports();
 
