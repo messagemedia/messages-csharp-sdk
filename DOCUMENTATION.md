@@ -4,6 +4,8 @@
 
 The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.
 
+![picture](http://i63.tinypic.com/33tox83.jpg)
+
 ## Getting Started
 
 Make sure you install the NuGet package into your solution:
