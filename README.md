@@ -53,6 +53,8 @@ namespace TestCSharpSDK
             var body = Newtonsoft.Json.JsonConvert.DeserializeObject<MessageMedia.Messages.Models.SendMessagesRequest>(bodyValue);
 
             MessageMedia.Messages.Models.SendMessagesResponse result = messages.CreateSendMessages(body);
+            Console.WriteLine(result.Messages);
+            Console.ReadKey();
         }
     }
 }
