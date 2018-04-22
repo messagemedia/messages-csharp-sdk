@@ -19,7 +19,7 @@ namespace MessageMedia.Messages.Controllers
 		#region shared http client instance
 		private static object _syncObject = new object();
 		private static IHttpClient _clientInstance = null;
-		protected const string SdkVersion = "messagemedia-messages-csharp-sdk-1.1.1";
+		protected const string SdkVersion = "messagemedia-messages-csharp-sdk-1.1.2";
 
 		public static IHttpClient ClientInstance
 		{

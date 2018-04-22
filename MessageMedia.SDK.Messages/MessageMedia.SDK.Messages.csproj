@@ -2,9 +2,24 @@
 
   <PropertyGroup>
     <TargetFrameworks>net45;netstandard1.3</TargetFrameworks>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
     <AssemblyVersion>1.1.2.0</AssemblyVersion>
     <FileVersion>1.1.2.0</FileVersion>
+	<Title>MessageMedia Messages SDK</Title>
+    <Authors>MessageMedia Developers</Authors>
+    <Company>MessageMedia</Company>
+    <Product>MessageMedia.SDK.Messages</Product>
+    <Description>The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.</Description>
+    <RepositoryUrl>https://github.com/messagemedia/messages-csharp-sdk</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/messagemedia/messages-csharp-sdk</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/messagemedia/messages-csharp-sdk/master/mm-logo.png</PackageIconUrl>
+    <PackageTags>MessageMedia REST API messaging sms</PackageTags>
+    <PackageLicenseUrl>https://github.com/messagemedia/messages-csharp-sdk/blob/master/LICENSE</PackageLicenseUrl>
+    <ApplicationIcon></ApplicationIcon>
+    <Win32Resource />
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageId />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">

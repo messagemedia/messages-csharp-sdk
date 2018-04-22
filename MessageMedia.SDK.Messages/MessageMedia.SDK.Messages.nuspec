@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.</description>
     <summary>MessageMedia Messages SDK</summary>
-    <releaseNotes>MessageMedia Messages C# SDK</releaseNotes>
+    <releaseNotes></releaseNotes>
     <copyright>Copyright 2017</copyright>
     <language>en-US</language>
     <tags>web messaging sms</tags>
