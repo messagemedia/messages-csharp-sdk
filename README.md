@@ -15,7 +15,7 @@ Visual Studio Mac:
 Project -> Add NuGet Packages -> Search for 'MessageMedia'
 
 ## 🎬 Get Started
-It's easy to get started. Simply enter the API Key and secret you obtained from the [MessageMedia Developers Portal](https://developers.messagemedia.com) into the code snippet below and a mobile number you wish to send to.
+It's easy to get started. Simply enter the API Key and secret you obtained from the [MessageMedia Developers Portal](https://developers.messagemedia.com) into the code snippet below and a mobile number you wish to send to. Please note this SDK is not supported for .NET Framework applications.
 
 ### 🚀 Send an SMS
 * Destination numbers (`destination_number`) should be in the [E.164](http://en.wikipedia.org/wiki/E.164) format. For example, `+61491570156`.
