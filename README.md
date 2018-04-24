@@ -7,7 +7,7 @@ The MessageMedia Messages API provides a number of endpoints for building powerf
 ## ⭐️ Installing via NuGet
 Install via NuGet by:
 
-PM> Install-Package MessageMedia.SDK.Messages
+PM> Install-Package MessageMedia.SDK.Messages -Version 1.1.2
 
 Alternatively, right-click on your solution and click "Manage NuGet Packages...", then click browse and search for MessageMedia.
 
