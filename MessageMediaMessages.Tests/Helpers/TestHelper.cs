@@ -355,7 +355,7 @@ namespace MessageMedia.Messages.Helpers
                 HttpRequest req = client.Get(url, null, null);
                 req.Headers = new Dictionary<string, string>
                 {
-                    {"user-agent", "messagemedia-messages-csharp-sdk-1.1.1" }
+                    {"user-agent", "messagemedia-messages-csharp-sdk-1.1.2" }
                 };
 
                 HttpResponse resp = client.ExecuteAsBinary(req);
