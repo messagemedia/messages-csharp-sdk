@@ -60,6 +60,51 @@ namespace TestCSharpSDK
 }
 ```
 
+### 🖼 Send an MMS
+* Destination numbers (`destination_number`) should be in the [E.164](http://en.wikipedia.org/wiki/E.164) format. For example, `+61491570156`.
+```csharp
+using System;
+using MessageMedia.Messages;
+using MessageMedia.Messages.Controllers;
+using MessageMedia.Messages.Models;
+
+namespace TestCSharpSDK
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Configure your credentials (Note, these can be pulled from the environment variables as well)
+            String basicAuthUserName = "YOUR_API_KEY";
+            String basicAuthPassword = "YOUR_API_SECRET";
+            bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
+            
+            // Instantiate the client
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
+            IMessagesController messages = client.Messages;
+
+            // Perform API call
+            string bodyValue = @"{
+                                   ""messages"":[
+                                      {
+                                         ""content"":""Greetings from MessageMedia!"",
+                                         ""destination_number"":""YOUR_MOBILE_NUMBER"",
+                                         ""format"":""MMS"",
+                                         ""media"":""https://upload.wikimedia.org/wikipedia/commons/6/6a/L80385-flash-superhero-logo-1544.png""
+                                      }
+                                   ]
+                                }";
+
+            var body = Newtonsoft.Json.JsonConvert.DeserializeObject<MessageMedia.Messages.Models.SendMessagesRequest>(bodyValue);
+
+            MessageMedia.Messages.Models.SendMessagesResponse result = messages.CreateSendMessages(body);
+            Console.WriteLine(result.Messages);
+            Console.ReadKey();
+        }
+    }
+}
+```
+
 ### 🕓 Get Status of a Message
 You can get a messsage ID from a sent message by looking at the `message_id` from the response of the above example.
 ```csharp
