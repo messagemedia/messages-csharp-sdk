@@ -90,7 +90,7 @@ namespace TestCSharpSDK
                                          ""content"":""Greetings from MessageMedia!"",
                                          ""destination_number"":""YOUR_MOBILE_NUMBER"",
                                          ""format"":""MMS"",
-                                         ""media"":""https://upload.wikimedia.org/wikipedia/commons/6/6a/L80385-flash-superhero-logo-1544.png""
+                                         ""media"":[""https://upload.wikimedia.org/wikipedia/commons/6/6a/L80385-flash-superhero-logo-1544.png""]
                                       }
                                    ]
                                 }";
