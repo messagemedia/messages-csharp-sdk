@@ -36,12 +36,12 @@ namespace MessageMedia.Messages
             {
                 if (client == null)
                 {
-					Configuration.BasicAuthUserName = Environment.GetEnvironmentVariable("MessageMediaApiTestsKey");
-					Configuration.BasicAuthPassword = Environment.GetEnvironmentVariable("MessageMediaApiTestsSecret");
-					client = new MessageMediaMessagesClient();
-				}
+			Configuration.BasicAuthUserName = Environment.GetEnvironmentVariable("MessageMediaApiTestsKey");
+			Configuration.BasicAuthPassword = Environment.GetEnvironmentVariable("MessageMediaApiTestsSecret");
+			client = new MessageMediaMessagesClient();
+		}
 
-				return client;
+			return client;
             }
         }
     }
