@@ -21,44 +21,28 @@ Next, register on [developers.messagemedia.com](https://developers.messagemedia.
 Once you've installed the NuGet package, you need to configure your credentials.
 
 ```csharp
-// Instantiate the client
-MessageMediaMessagesClient client = new MessageMediaMessagesClient();
-IRepliesController controller = client.Replies;
-
 // Configure your credentials (Note, these can be pulled from the environment variables as well)
-Configuration.BasicAuthUserName = "Your MessageMedia API Key here";
-Configuration.BasicAuthPassword = "Your MessageMedia API Secret here";
+String basicAuthUserName = "YOUR_API_KEY";
+String basicAuthPassword = "YOUR_API_SECRET";
+bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
+
+// Instantiate the client
+MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
+IMessagesController messages = client.Messages;
 
 // Perform API call
-CheckRepliesResponse result = null;
+string bodyValue = @"{
+                       ""messages"":[
+                          {
+                             ""content"":""Greetings from MessageMedia!"",
+                             ""destination_number"":""YOUR_MOBILE_NUMBER""
+                          }
+                       ]
+                    }";
 
-try
-{
-    result = await controller.GetCheckRepliesAsync();
-}
-catch(APIException exception)
-{
-    Console.WriteLine("An error occured: " + exception.Message);
-};
-```
+var body = Newtonsoft.Json.JsonConvert.DeserializeObject<MessageMedia.Messages.Models.SendMessagesRequest>(bodyValue);
 
-### Authentication
-In order to setup authentication for the API client, you need the two of the following, depending on your preferred authentication method.
-
-| Parameter | Description |
-|-----------|-------------|
-| basicAuthUserName | The username to use with basic authentication |
-| basicAuthPassword | The password to use with basic authentication |
-| hmacAuthUserName | The username to use with HMAC authentication |
-| hmacAuthPassword | The password to use with HMAC authentication |
-
-API client can be initialized using:
-
-```csharp
-// Configuration parameters and credentials
-string hmacAuthUserName = "hmacAuthUserName"; // The username to use with HMAC authentication
-string hmacAuthPassword = "hmacAuthPassword"; // The password to use with HMAC authentication
-bool useHmacAuthentication = true;
-
-MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
+MessageMedia.Messages.Models.SendMessagesResponse result = messages.CreateSendMessages(body);
+Console.WriteLine(result.Messages);
+Console.ReadKey();
 ```
