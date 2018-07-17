@@ -78,6 +78,8 @@ using System;
 using MessageMedia.Messages;
 using MessageMedia.Messages.Controllers;
 using MessageMedia.Messages.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace TestCSharpSDK
 {
@@ -104,10 +106,12 @@ namespace TestCSharpSDK
                                    ]
                                 }";
 
-            var body = Newtonsoft.Json.JsonConvert.DeserializeObject<MessageMedia.Messages.Models.SendMessagesRequest>(bodyValue);
+            var body = Newtonsoft.Json.JsonConvert.DeserializeObject<SendMessagesRequest>(bodyValue);
 
-            MessageMedia.Messages.Models.SendMessagesResponse result = messages.CreateSendMessages(body);
-            Console.WriteLine(result.Messages);
+            SendMessagesResponse result = messages.CreateSendMessages(body);
+            var json = JsonConvert.SerializeObject(result.Messages);
+            var parse = JObject.Parse(json);
+            Console.WriteLine(parse);
             Console.ReadKey();
         }
     }
