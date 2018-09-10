@@ -96,7 +96,7 @@ namespace TestCSharpSDK
             MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
             IMessagesController messages = client.Messages;
 
-			var request = new SendMessagesRequest() {
+            var request = new SendMessagesRequest() {
 				Messages = new []{
 					new Message() {
 						Content = "Greetings from MessageMedia!",
@@ -140,21 +140,25 @@ namespace TestCSharpSDK
             IMessagesController messages = client.Messages;
 
             // Perform API call
-            string bodyValue = @"{
-                                   ""messages"":[
-                                      {
-                                         ""content"":""Greetings from MessageMedia!"",
-                                         ""destination_number"":""YOUR_MOBILE_NUMBER"",
-                                         ""format"":""MMS"",
-                                         ""media"":[""https://upload.wikimedia.org/wikipedia/commons/6/6a/L80385-flash-superhero-logo-1544.png""]
-                                      }
-                                   ]
-                                }";
+            var request = new SendMessagesRequest()
+            {
+                Messages = new[]
+                {
+                    new Message()
+                    {
+                        Format = MessageFormat.MMS,
+                        Content = "Greets from MessageMedia!",
+                        DestinationNumber = "YOUR_MOBILE_NUMBER",
+                        Media = new[]
+                            {"https://upload.wikimedia.org/wikipedia/commons/6/6a/L80385-flash-superhero-logo-1544.png"}
 
-            var body = Newtonsoft.Json.JsonConvert.DeserializeObject<MessageMedia.Messages.Models.SendMessagesRequest>(bodyValue);
+                    }
+                }
+            };
 
-            MessageMedia.Messages.Models.SendMessagesResponse result = messages.CreateSendMessages(body);
-            Console.WriteLine(result.Messages);
+             Message message = result.Messages.First();
+			
+            Console.WriteLine("Status: {0}, Message Id: {1}", message.Status, message.MessageId);
             Console.ReadKey();
         }
     }
