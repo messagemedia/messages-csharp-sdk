@@ -96,22 +96,20 @@ namespace TestCSharpSDK
             MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
             IMessagesController messages = client.Messages;
 
-            // Perform API call
-            string bodyValue = @"{
-                                   ""messages"":[
-                                      {
-                                         ""content"":""Greetings from MessageMedia!"",
-                                         ""destination_number"":""YOUR_MOBILE_NUMBER""
-                                      }
-                                   ]
-                                }";
+			var request = new SendMessagesRequest() {
+				Messages = new []{
+					new Message() {
+						Content = "Greetings from MessageMedia!",
+						DestinationNumber = "YOUR_MOBILE_NUMBER"
+					}
+				}
+			}
+			
 
-            var body = Newtonsoft.Json.JsonConvert.DeserializeObject<SendMessagesRequest>(bodyValue);
-
-            SendMessagesResponse result = messages.CreateSendMessages(body);
-            var json = JsonConvert.SerializeObject(result.Messages);
-            var parse = JObject.Parse(json);
-            Console.WriteLine(parse);
+            SendMessagesResponse result = messages.CreateSendMessages(request);
+            Message message = result.Messages.First();
+			
+            Console.WriteLine("Status: {0}, Message Id: {1}", message.Status, message.MessageId);
             Console.ReadKey();
         }
     }
