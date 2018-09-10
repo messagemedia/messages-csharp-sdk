@@ -19,13 +19,13 @@ namespace MessageMedia.Messages.Models
     public class SendMessagesResponse : BaseModel 
     {
         // These fields hold the values for the public properties.
-        private object messages;
+        private IList<Message> messages;
 
         /// <summary>
         /// TODO: Write general description for this method
         /// </summary>
         [JsonProperty("messages")]
-        public object Messages 
+        public IList<Message> Messages 
         { 
             get 
             {
