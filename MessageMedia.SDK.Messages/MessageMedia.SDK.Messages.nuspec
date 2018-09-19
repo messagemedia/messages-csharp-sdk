@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>MessageMedia.SDK.Messages</id>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
     <title>MessageMedia Messages SDK</title>
     <authors>MessageMedia Developers</authors>
     <owners>MessageMedia</owners>
