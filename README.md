@@ -61,7 +61,7 @@ We welcome your thoughts on how we could best provide you with SDKs that would s
 ## :star: Installation
 Install via NuGet by:
 
-PM> Install-Package MessageMedia.SDK.Messages -Version 1.1.2
+PM> Install-Package MessageMedia.SDK.Messages -Version 1.1.3
 
 Alternatively, right-click on your solution and click "Manage NuGet Packages...", then click browse and search for MessageMedia.
 
