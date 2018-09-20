@@ -75,6 +75,7 @@ It's easy to get started. Simply enter the API Key and secret you obtained from 
 Destination numbers (`destination_number`) should be in the [E.164](http://en.wikipedia.org/wiki/E.164) format. For example, `+61491570156`.
 ```csharp
 using System;
+using System.Linq;
 using MessageMedia.Messages;
 using MessageMedia.Messages.Controllers;
 using MessageMedia.Messages.Models;
@@ -103,7 +104,7 @@ namespace TestCSharpSDK
 						DestinationNumber = "YOUR_MOBILE_NUMBER"
 					}
 				}
-			}
+			};
 			
 
             SendMessagesResponse result = messages.CreateSendMessages(request);
@@ -120,6 +121,7 @@ namespace TestCSharpSDK
 Destination numbers (`destination_number`) should be in the [E.164](http://en.wikipedia.org/wiki/E.164) format. For example, `+61491570156`.
 ```csharp
 using System;
+using System.Linq;
 using MessageMedia.Messages;
 using MessageMedia.Messages.Controllers;
 using MessageMedia.Messages.Models;
@@ -156,7 +158,8 @@ namespace TestCSharpSDK
                 }
             };
 
-             Message message = result.Messages.First();
+            SendMessagesResponse result = messages.CreateSendMessages(request);
+            Message message = result.Messages.First();
 			
             Console.WriteLine("Status: {0}, Message Id: {1}", message.Status, message.MessageId);
             Console.ReadKey();
