@@ -15,6 +15,13 @@ namespace MessageMedia.Messages.Models
         /// </summary>
         [JsonProperty("media")] public string[] Media { get; set; }
 
+        /// <summary>
+        /// Subject of the Message
+        /// 
+        /// <remarks>Only valid if the Format is MMS</remarks>
+        /// </summary>
+        [JsonProperty("subject")] public string Subject { get; set; }
+
         [JsonProperty("status")] public MessageStatus Status { get; set; }
 
         /// <summary>
