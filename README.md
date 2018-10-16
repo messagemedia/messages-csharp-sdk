@@ -75,9 +75,11 @@ It's easy to get started. Simply enter the API Key and secret you obtained from 
 Destination numbers (`destination_number`) should be in the [E.164](http://en.wikipedia.org/wiki/E.164) format. For example, `+61491570156`.
 ```csharp
 using System;
+using System.Linq;
 using MessageMedia.Messages;
 using MessageMedia.Messages.Controllers;
 using MessageMedia.Messages.Models;
+
 
 namespace TestCSharpSDK
 {
@@ -89,25 +91,24 @@ namespace TestCSharpSDK
             String basicAuthUserName = "YOUR_API_KEY";
             String basicAuthPassword = "YOUR_API_SECRET";
             bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
-
+            
             // Instantiate the client
             MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
             IMessagesController messages = client.Messages;
 
-            // Perform API call
-            string bodyValue = @"{
-                                   ""messages"":[
-                                      {
-                                         ""content"":""Greetings from MessageMedia!"",
-                                         ""destination_number"":""YOUR_MOBILE_NUMBER""
-                                      }
-                                   ]
-                                }";
+            var request = new SendMessagesRequest() {
+				Messages = new []{
+					new Message() {
+						Content = "Greetings from MessageMedia!",
+						DestinationNumber = "YOUR_MOBILE_NUMBER"
+					}
+				}
+			};
 
-            var body = Newtonsoft.Json.JsonConvert.DeserializeObject<MessageMedia.Messages.Models.SendMessagesRequest>(bodyValue);
-
-            MessageMedia.Messages.Models.SendMessagesResponse result = messages.CreateSendMessages(body);
-            Console.WriteLine(result.Messages);
+            SendMessagesResponse result = messages.CreateSendMessages(request);
+            Message message = result.Messages.First();
+			
+            Console.WriteLine("Status: {0}, Message Id: {1}", message.Status, message.MessageId);
             Console.ReadKey();
         }
     }
@@ -118,6 +119,7 @@ namespace TestCSharpSDK
 Destination numbers (`destination_number`) should be in the [E.164](http://en.wikipedia.org/wiki/E.164) format. For example, `+61491570156`.
 ```csharp
 using System;
+using System.Linq;
 using MessageMedia.Messages;
 using MessageMedia.Messages.Controllers;
 using MessageMedia.Messages.Models;
@@ -153,8 +155,8 @@ namespace TestCSharpSDK
                     }
                 }
             };
-
-             Message message = result.Messages.First();
+            SendMessagesResponse result = messages.CreateSendMessages(request);
+            Message message = result.Messages.First();
 
             Console.WriteLine("Status: {0}, Message Id: {1}", message.Status, message.MessageId);
             Console.ReadKey();
@@ -181,7 +183,7 @@ namespace TestCSharpSDK
             String basicAuthUserName = "YOUR_API_KEY";
             String basicAuthPassword = "YOUR_API_SECRET";
             bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
-
+            
             // Instantiate the client
             MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
             IMessagesController messages = client.Messages;
@@ -214,7 +216,7 @@ namespace TestCSharpSDK
             String basicAuthUserName = "YOUR_API_KEY";
             String basicAuthPassword = "YOUR_API_SECRET";
             bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
-
+            
             // Instantiate the client
             MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
             IRepliesController replies = client.Replies;
@@ -246,7 +248,7 @@ namespace TestCSharpSDK
             String basicAuthUserName = "YOUR_API_KEY";
             String basicAuthPassword = "YOUR_API_SECRET";
             bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
-
+            
             // Instantiate the client
             MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
             IDeliveryReportsController deliveryReports = client.DeliveryReports;

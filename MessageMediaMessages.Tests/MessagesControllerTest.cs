@@ -99,7 +99,38 @@ namespace MessageMedia.Messages
         public async Task TestSendMessages1() 
         {
             // Parameters for the API call
-            SendMessagesRequest body = APIHelper.JsonDeserialize<Models.SendMessagesRequest>("{    \"messages\": [        {            \"callback_url\": \"https://my.callback.url.com\",            \"content\": \"My first message\",            \"destination_number\": \"+61491570156\",            \"delivery_report\": true,            \"format\": \"SMS\",            \"message_expiry_timestamp\": \"2016-11-03T11:49:02.807Z\",            \"metadata\": {                \"key1\": \"value1\",                \"key2\": \"value2\"            },            \"scheduled\": \"2016-11-03T11:49:02.807Z\",            \"source_number\": \"+61491570157\",            \"source_number_type\": \"INTERNATIONAL\"        },        {            \"callback_url\": \"https://my.callback.url.com\",            \"content\": \"My second message\",            \"destination_number\": \"+61491570158\",            \"delivery_report\": true,            \"format\": \"SMS\",            \"message_expiry_timestamp\": \"2016-11-03T11:49:02.807Z\",            \"metadata\": {                \"key1\": \"value1\",                \"key2\": \"value2\"            },            \"scheduled\": \"2016-11-03T11:49:02.807Z\",            \"source_number\": \"+61491570159\",            \"source_number_type\": \"INTERNATIONAL\"        }    ]}");
+            SendMessagesRequest body = new SendMessagesRequest()
+            {
+                Messages = new List<Message>
+                {
+                    new Message()
+                    {
+                        CallbackUrl = "https://my.callback.url.com",
+                        Content = "My first message",
+                        DestinationNumber = "+61491570156",
+                        DeliveryReport = true,
+                        Format = MessageFormat.SMS,
+                        MessageExpiryTimestamp = new DateTime(2016, 11, 03, 11, 49, 02, DateTimeKind.Utc),
+                        Metadata = new Dictionary<string, string>() {{"key1", "value1"}, {"key2", "value2"}},
+                        Scheduled = new DateTime(2016, 11, 03, 11, 49, 02, DateTimeKind.Utc),
+                        SourceNumber = "+61491570157",
+                        SourceNumberType = NumberType.INTERNATIONAL
+                    },
+                    new Message()
+                    {
+                        CallbackUrl = "https://my.callback.url.com",
+                        Content = "My second message",
+                        DestinationNumber = "+61491570158",
+                        DeliveryReport = true,
+                        Format = MessageFormat.SMS,
+                        MessageExpiryTimestamp = new DateTime(2016, 11, 03, 11, 49, 02, DateTimeKind.Utc),
+                        Metadata = new Dictionary<string, string>() {{"key1", "value1"}, {"key2", "value2"}},
+                        Scheduled = new DateTime(2016, 11, 03, 11, 49, 02, DateTimeKind.Utc),
+                        SourceNumber = "+61491570159",
+                        SourceNumberType = NumberType.INTERNATIONAL
+                    }
+                }
+            };
 
             // Perform API call
             SendMessagesResponse result = null;
@@ -122,7 +153,7 @@ namespace MessageMedia.Messages
             // Test whether the captured response is as we expected
             Assert.IsNotNull(result, "Result should exist");
 
-			dynamic messages  = result.Messages;//JObject.Parse(TestHelper.ConvertStreamToString(httpCallBackHandler.Response.RawBody));
+			dynamic messages  = result.Messages;
 			int count = (int)messages.Count;
 
 			Assert.AreEqual(count, 2);
@@ -134,19 +165,19 @@ namespace MessageMedia.Messages
 			AssertSendMessageResponseValid(secondMessage, "SMS", "My second message", "https://my.callback.url.com", true, "+61491570158", "+61491570159", "queued");
 		}
 
-		private void AssertSendMessageResponseValid(dynamic message, string expectedFormat, string expectedContent, string expectedCallbackUrl, 
+		private void AssertSendMessageResponseValid(Message message, string expectedFormat, string expectedContent, string expectedCallbackUrl, 
 			bool expectedDeliveryReport, string expectedDestinationNumber, string expectedSourceNumber, string expectedStatus)
 		{
-			var format = (string)message.format;
-			var content = (string)message.content;
-			var callbackUrl = (string)message.callback_url;
-			var deliveryReport = (bool)message.delivery_report;
-			var destinationNumber = (string)message.destination_number;
-			var sourceNumber = (string)message.source_number;
-			var status = (string)message.status;
-			var messageId = (string)message.message_id;
-			var messageExpiry = (string)message.message_expiry_timestamp;
-			var scheduled = (string)message.scheduled;
+			var format = message.Format.ToString();
+			var content = (string)message.Content;
+			var callbackUrl = (string)message.CallbackUrl;
+			var deliveryReport = (bool)message.DeliveryReport;
+			var destinationNumber = (string)message.DestinationNumber;
+		    var sourceNumber = (string) message.SourceNumber;
+			var status = (string)message.Status.ToString();
+			var messageId = (string)message.MessageId;
+			var messageExpiry = message.MessageExpiryTimestamp;
+			var scheduled = message.Scheduled;
 
 			Assert.AreEqual(format, expectedFormat, "Format should match exactly (string literal match)");
 			Assert.AreEqual(content, expectedContent, "Content should match exactly (string literal match)");
@@ -158,18 +189,10 @@ namespace MessageMedia.Messages
 
 			// note, these are non-deterministic, so we only check for their existence.
 			Assert.IsNotEmpty(messageId, "Message ID should not be empty.");
-			Assert.IsNotEmpty(messageExpiry, "Message Expiry should not be empty.");
-			Assert.IsNotEmpty(scheduled, "Scheduled time should not be empty.");
+			Assert.IsNotNull(messageExpiry, "Message Expiry should not be empty.");
+			Assert.IsNotNull(scheduled, "Scheduled time should not be empty.");
 
-			DateTime date;
-			bool canParse = DateTime.TryParse(messageExpiry, out date);
-
-			Assert.IsTrue(canParse, "Message Expiry must be a valid DateTime");
-
-			canParse = DateTime.TryParse(scheduled, out date);
-			Assert.IsTrue(canParse, "Scheduled time must be a valid DateTime");
-
-			JObject metadata = message.metadata as JObject;
+			var metadata = message.Metadata;
 
 			Assert.IsNotNull(metadata, "Metadata must not be null.");
 
@@ -177,16 +200,13 @@ namespace MessageMedia.Messages
 
 			Assert.AreEqual(metadataCount, 2, "Metadata must have two children.");
 
-			var firstKey = ((dynamic)metadata).key1;
-			var secondKey = ((dynamic)metadata).key2;
+			Assert.IsTrue(metadata.ContainsKey("key1"), "Metadata must contain key1.");
+		    Assert.IsTrue(metadata.ContainsKey("key2"), "Metadata must contain key2.");
 
-			Assert.IsNotNull(firstKey, "Metadata must contain key1.");
-			Assert.IsNotNull(secondKey, "Metadata must contain key2.");
+			var firstKeyValue = metadata["key1"];
+		    var secondKeyValue = metadata["key2"];
 
-			var firstKeyValue = (string)firstKey;
-			var secondKeyValue = (string)secondKey;
-
-			Assert.AreEqual(firstKeyValue, "value1", "key1 must equal value1.");
+            Assert.AreEqual(firstKeyValue, "value1", "key1 must equal value1.");
 			Assert.AreEqual(secondKeyValue, "value2", "key2 must equal value1.");
 		}
 	}
