@@ -139,26 +139,20 @@ namespace TestCSharpSDK
             IMessagesController messages = client.Messages;
 
             // Perform API call
-            var request = new SendMessagesRequest()
-            {
-                Messages = new[]
-                {
-                    new Message()
-                    {
-                        Format = MessageFormat.MMS,
-                        Content = "Greets from MessageMedia!",
-                        DestinationNumber = "YOUR_MOBILE_NUMBER",
-                        Media = new[]
-                            {"https://upload.wikimedia.org/wikipedia/commons/6/6a/L80385-flash-superhero-logo-1544.png"}
-
-                    }
-                }
-            };
-            SendMessagesResponse result = messages.CreateSendMessages(request);
-            Message message = result.Messages.First();
-
-            Console.WriteLine("Status: {0}, Message Id: {1}", message.Status, message.MessageId);
-            Console.ReadKey();
+            string bodyValue = @"{
+                                   ""messages"":[
+                                      {
+                                         ""content"":""Greetings from MessageMedia!"",
+                                         ""destination_number"":""YOUR_MOBILE_NUMBER"",
+                                         ""format"":""MMS"",
+                                         ""subject"":""This is an MMS message"",
+                                         ""media"":[""https://upload.wikimedia.org/wikipedia/commons/6/6a/L80385-flash-superhero-logo-1544.png""]
+                                      }
+                                   ]
+                                }";
+             var body = Newtonsoft.Json.JsonConvert.DeserializeObject<MessageMedia.Messages.Models.SendMessagesRequest>(bodyValue);
+             MessageMedia.Messages.Models.SendMessagesResponse result = messages.CreateSendMessages(body);
+            Console.WriteLine(result.Messages);
         }
     }
 }
