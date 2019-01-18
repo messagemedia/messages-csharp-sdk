@@ -26,7 +26,6 @@ namespace MessageMedia.Messages.Models
         /// <summary>
         /// TODO: Write general description for this method
         /// </summary>
-
         [JsonProperty("messages")]
         public List<Models.Message> Messages 
         { 

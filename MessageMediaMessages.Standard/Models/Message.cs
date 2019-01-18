@@ -48,11 +48,8 @@ namespace MessageMedia.Messages.Models
             } 
             set 
             {
-                if (value != null){
-                    this.callbackUrl = value;
-                    onPropertyChanged("CallbackUrl");
-                }
-
+                this.callbackUrl = value;
+                onPropertyChanged("CallbackUrl");
             }
         }
 
