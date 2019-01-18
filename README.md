@@ -120,19 +120,14 @@ API client can be initialized as following.
 MessageMediaMessagesClient client = new MessageMediaMessagesClient();
 ```
 
-# Class Reference
+# Singleton Controllers
 
-## <a name="list_of_controllers"></a>List of Controllers
 
 * [MessagesController](#messages_controller)
 * [DeliveryReportsController](#delivery_reports_controller)
 * [RepliesController](#replies_controller)
 
-## <a name="messages_controller"></a>![Class: ](https://apidocs.io/img/class.png "MessageMedia.Messages.Controllers.MessagesController") MessagesController
-
-### Get singleton instance
-
-The singleton instance of the ``` MessagesController ``` class can be accessed from the API Client.
+In this version of the SDK there are three "controllers" which are invoked as singletons which control the various actions. For example: the singleton instance of the ``` MessagesController ``` class can be accessed from the API Client.
 
 ```csharp
 MessagesController messages = client.Messages;
@@ -140,19 +135,160 @@ MessagesController messages = client.Messages;
 ### Send an SMS
 Destination numbers (`destination_number`) should be in the [E.164](http://en.wikipedia.org/wiki/E.164) format. For example, `+61491570156`.
 
-var body = new Models.SendMessagesRequest();
+```csharp
+using System;
+using MessageMedia.Messages;
+using MessageMedia.Messages.Models;
+using MessageMedia.Messages.Exceptions;
+using MessageMedia.Messages.Controllers;
+using System.Collections.Generic;
 
-Models.SendMessagesResponse result = await messages.SendMessages(body);
+namespace TestConosleApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+
+            MessagesController messages = client.Messages;
+
+
+            SendMessagesRequest body = new SendMessagesRequest();
+            body.Messages = new List<Message>();
+
+            Message body_messages_0 = new Message();
+            body_messages_0.Content = "Hello world!";
+            body_messages_0.DestinationNumber = "+614<number>";
+            body.Messages.Add(body_messages_0);
+
+
+            try
+            {
+                Models.SendMessagesResponse result = messages.SendMessagesAsync(body).Result;
+                Console.WriteLine(result);
+            }
+            catch (APIException e)
+            {
+                Console.WriteLine(e.Message + e.ResponseCode + e.HttpContext.ToString());
+            };
+        }
+    }
+}
+```
 
 ### Send an MMS
 Destination numbers (`destination_number`) should be in the [E.164](http://en.wikipedia.org/wiki/E.164) format. For example, `+61491570156`.
+
+```csharp
+using System;
+using MessageMedia.Messages;
+using MessageMedia.Messages.Models;
+using MessageMedia.Messages.Exceptions;
+using MessageMedia.Messages.Controllers;
+using System.Collections.Generic;
+
+namespace TestConsoleApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+
+            MessagesController messages = client.Messages;
+
+
+            SendMessagesRequest body = new SendMessagesRequest();
+            body.Messages = new List<Message>();
+
+            Message body_messages_0 = new Message();
+            body_messages_0.Content = "Hello world!";
+            body_messages_0.DestinationNumber = "+614<number>";
+            body_messages_0.Format = FormatEnum.MMS;
+            body_messages_0.Subject = "This is an MMS message";
+            body_messages_0.Media = new List<string>()
+        {
+            "https://upload.wikimedia.org/wikipedia/commons/6/6a/L80385-flash-superhero-logo-1544.png"
+        };
+            body.Messages.Add(body_messages_0);
+
+
+            try
+            {
+                dynamic result = messages.SendMessagesAsync(body).Result;
+                Console.WriteLine(result);
+            }
+            catch (APIException e)
+            {
+                Console.WriteLine(e.Message + e.ResponseCode + e.HttpContext.ToString());
+            };
+        }
+    }
+}
+```
 
 ### Get Status of a Message
 You can get a messsage ID from a sent message by looking at the `message_id` from the response of the above example.
 
 string messageId = "messageId";
 
-Models.GetMessageStatusResponse result = await messages.GetMessageStatus(messageId);
+```csharp
+using System;
+using MessageMedia.Messages;
+using MessageMedia.Messages.Models;
+using MessageMedia.Messages.Exceptions;
+using MessageMedia.Messages.Controllers;
+using System.Collections.Generic;
+
+namespace TestConosleApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+
+            MessagesController messages = client.Messages;
+
+
+            SendMessagesRequest body = new SendMessagesRequest();
+            body.Messages = new List<Message>();
+
+            Message body_messages_0 = new Message();
+            body_messages_0.Content = "Hello world!";
+            body_messages_0.DestinationNumber = "+614<number>";
+            body_messages_0.Format = FormatEnum.MMS;
+            body_messages_0.Subject = "This is an MMS message";
+            body_messages_0.Media = new List<string>()
+        {
+            "https://upload.wikimedia.org/wikipedia/commons/6/6a/L80385-flash-superhero-logo-1544.png"
+        };
+            body.Messages.Add(body_messages_0);
+
+
+            try
+            {
+                dynamic result = messages.SendMessagesAsync(body).Result;
+
+                string msgs = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+                Console.WriteLine(msgs);
+               
+                Guid messageId = result.Messages[0].MessageId;
+
+                dynamic result2 = messages.GetMessageStatus(messageId + "");
+
+                string msg = Newtonsoft.Json.JsonConvert.SerializeObject(result2);
+                Console.WriteLine(msg);
+            }
+            catch (APIException e)
+            {
+                Console.WriteLine(e.Message + e.ResponseCode + e.HttpContext.ToString());
+            };
+        }
+    }
+}
+```
 
 ### Get replies to a message
 You can check for replies that are sent to your messages
@@ -161,19 +297,87 @@ You can check for replies that are sent to your messages
 The singleton instance of the ``` RepliesController ``` class can be accessed from the API Client.
 
 ```csharp
-RepliesController replies = client.Replies;
+using System;
+using MessageMedia.Messages;
+using MessageMedia.Messages.Models;
+using MessageMedia.Messages.Exceptions;
+using MessageMedia.Messages.Controllers;
+using System.Collections.Generic;
+
+namespace TestConsoleApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+
+            MessagesController messages = client.Messages;
+
+            RepliesController replies = client.Replies;
+
+            try
+            {
+                dynamic result = replies.CheckReplies();
+
+                string msgs = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+                Console.WriteLine(msgs);
+
+
+            }
+            catch (APIException e)
+            {
+                Console.WriteLine(e.Message + e.ResponseCode + e.HttpContext.ToString());
+            };
+
+        }
+    }
+}
 ```
-
-
-Models.CheckRepliesResponse result = await replies.CheckReplies();
 
 ### Check Delivery Reports
 This endpoint allows you to check for delivery reports to inbound and outbound messages.
 
-DeliveryReportsController deliveryReports = client.DeliveryReports;
+```csharp
+using System;
+using MessageMedia.Messages;
+using MessageMedia.Messages.Models;
+using MessageMedia.Messages.Exceptions;
+using MessageMedia.Messages.Controllers;
+using System.Collections.Generic;
 
-Models.CheckDeliveryReportsResponse result = await deliveryReports.CheckDeliveryReports();
+namespace TestConsoleApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
 
+            MessagesController messages = client.Messages;
+
+            RepliesController replies = client.Replies;
+
+            DeliveryReportsController deliveryReports = client.DeliveryReports;
+
+
+            try
+            {
+                dynamic result = deliveryReports.CheckDeliveryReports();
+
+                string msgs = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+                Console.WriteLine(msgs);
+
+            }
+            catch (APIException e)
+            {
+                Console.WriteLine(e.Message + e.ResponseCode + e.HttpContext.ToString());
+            };
+
+        }
+    }
+}
+```
 
 ## :closed_book: API Reference Documentation
 Check out the [full API documentation](https://developers.messagemedia.com/code/messages-api-documentation/) for more detailed information.
