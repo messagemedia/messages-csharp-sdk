@@ -12,11 +12,11 @@ The MessageMedia Messages API provides a number of endpoints for building powerf
   * [Slack and Mailing List](#slack-and-mailing-list)
   * [Bug Reports](#bug-reports)
   * [Contributing](#contributing)
-  * [License](#page_with_curl-license)
-  * [API Documentation](#closed_book-api-documentation)
-  * [Need help?](#confused-need-help)
 * [Installation](#star-installation)
 * [Get Started](#clapper-get-started)
+* [API Documentation](#closed_book-api-documentation)
+* [Need help?](#confused-need-help)
+* [License](#page_with_curl-license)
 
 ## :closed_lock_with_key: Authentication
 
@@ -629,3 +629,12 @@ dynamic result = await replies.ConfirmRepliesAsReceived(body);
 
 
 [Back to List of Controllers](#list_of_controllers)
+
+## :closed_book: API Reference Documentation
+Check out the [full API documentation](https://developers.messagemedia.com/code/messages-api-documentation/) for more detailed information.
+
+## :confused: Need help?
+Please contact developer support at developers@messagemedia.com or check out the developer portal at [developers.messagemedia.com](https://developers.messagemedia.com/)
+
+## :page_with_curl: License
+Apache License. See the [LICENSE](LICENSE) file.
