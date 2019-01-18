@@ -111,8 +111,6 @@ Here, you can add code to initialize the client library and acquire the instance
 
 ## Initialization
 
-###
-
 API client can be initialized as following.
 
 ```csharp
@@ -120,7 +118,7 @@ API client can be initialized as following.
 MessageMediaMessagesClient client = new MessageMediaMessagesClient();
 ```
 
-# Singleton Controllers
+### Singleton Controllers
 
 
 * [MessagesController](#messages_controller)
