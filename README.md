@@ -377,6 +377,72 @@ namespace TestConsoleApp
 }
 ```
 
+### Confirm Delivery Reports
+This endpoint allows you to mark delivery reports as confirmed so they're no longer returned by the Check Delivery Reports function.
+
+```csharp
+using System;
+using MessageMedia.Messages;
+using MessageMedia.Messages.Models;
+using MessageMedia.Messages.Exceptions;
+using MessageMedia.Messages.Controllers;
+using System.Collections.Generic;
+
+namespace TestConsoleApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+            DeliveryReportsController deliveryReports = client.DeliveryReports;
+            
+            ConfirmDeliveryReportsAsReceivedRequest body = new ConfirmDeliveryReportsAsReceivedRequest();
+            body.DeliveryReportIds = new List<string>();
+            body.DeliveryReportIds.Add("011dcead-6988-4ad6-a1c7-6b6c68ea628d");
+            body.DeliveryReportIds.Add("3487b3fa-6586-4979-a233-2d1b095c7718");
+            body.DeliveryReportIds.Add("ba28e94b-c83d-4759-98e7-ff9c7edb87a1");
+            
+            try 
+            {
+                dynamic result = deliveryReports.ConfirmDeliveryReportsAsReceivedAsync(body).Result;
+            }
+            catch (APIException e){};   
+        }
+    }
+}
+```
+
+### Check credits remaining (Prepaid accounts only)
+This endpoint allows you to check for credits remaining on your prepaid account.
+
+```csharp
+using System;
+using MessageMedia.Messages;
+using MessageMedia.Messages.Models;
+using MessageMedia.Messages.Exceptions;
+using MessageMedia.Messages.Controllers;
+using System.Collections.Generic;
+
+namespace TestConsoleApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+            MessagesController messages = client.Messages;
+            
+            try 
+            {
+                dynamic result = messages.CheckCreditsRemainingAsync().Result;
+            }
+            catch (APIException e){};   
+        }
+    }
+}
+```
+
 ## :closed_book: API Reference Documentation
 Check out the [full API documentation](https://developers.messagemedia.com/code/messages-api-documentation/) for more detailed information.
 
