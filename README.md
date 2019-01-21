@@ -1,9 +1,7 @@
 # MessageMedia Messages C# SDK
-[![Travis Build Status](https://api.travis-ci.org/messagemedia/messages-csharp-sdk.svg?branch=master)](https://travis-ci.org/messagemedia/messages-csharp-sdk)
 [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
-[![NuGet version](https://badge.fury.io/nu/MessageMedia.SDK.Messages.svg)](https://badge.fury.io/nu/MessageMedia.SDK.Messages)
 
-The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.
+The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications. In v 2.0, the SDK is now .NET compatible and available as a standard solution library.
 
 ![Isometric](https://i.imgur.com/jJeHwf5.png)
 
@@ -22,9 +20,11 @@ The MessageMedia Messages API provides a number of endpoints for building powerf
 
 ## :closed_lock_with_key: Authentication
 
-Authentication is done via API keys. Sign up at https://developers.messagemedia.com/register/ to get your API keys.
+Authentication is done via API keys. Sign up at https://developers.messagemedia.com/register/ to get your API keys. Username is the key and password is the secret.
 
 Requests are authenticated using HTTP Basic Auth or HMAC. Provide your API key as the auth_user_name and API secret as the auth_password.
+
+If you set an HMAC username and password the controller will use HMAC authentication. Otherwise it will assume basic auth. The file to input these credentials into is the Configuration.cs file you will find in the main directory of the solution. 
 
 ## :interrobang: Errors
 
@@ -59,56 +59,117 @@ If you discover a problem with the SDK, we would like to know about it. You can 
 We welcome your thoughts on how we could best provide you with SDKs that would simplify how you consume our services in your application. You can fork and create pull requests for any features you would like to see or raise an [issue](https://github.com/messagemedia/signingkeys-nodejs-sdk/issues)
 
 ## :star: Installation
-Install via NuGet by:
+The code provided uses the Newtonsoft Json.NET NuGet Package. If the automatic NuGet package restore
+is enabled, these dependencies will be installed automatically. Therefore,
+you will need internet access for build.
 
-PM> Install-Package MessageMedia.SDK.Messages -Version 1.1.2
+"This library requires Visual Studio 2017 for compilation."
+1. Open the solution (MessageMediaMessages.sln) file.
+2. Invoke the build process using `Ctrl+Shift+B` shortcut key or using the `Build` menu as shown below.
 
-Alternatively, right-click on your solution and click "Manage NuGet Packages...", then click browse and search for MessageMedia.
-
-Visual Studio Mac:
-Project -> Add NuGet Packages -> Search for 'MessageMedia'
+![Building SDK using Visual Studio](https://apidocs.io/illustration/cs?step=buildSDK&workspaceFolder=MessageMediaMessages-CSharp&workspaceName=MessageMediaMessages&projectName=MessageMediaMessages.Standard)
 
 ## :clapper: Get Started
-It's easy to get started. Simply enter the API Key and secret you obtained from the [MessageMedia Developers Portal](https://developers.messagemedia.com) into the code snippet below and a mobile number you wish to send to. Please note this SDK is not supported for .NET Framework applications.
 
+The build process generates a portable class library, which can be used like a normal class library. The generated library is compatible with Windows Forms, Windows RT, Windows Phone 8,
+Silverlight 5, Xamarin iOS, Xamarin Android and Mono. More information on how to use can be found at the [MSDN Portable Class Libraries documentation](http://msdn.microsoft.com/en-us/library/vstudio/gg597391%28v=vs.100%29.aspx).
+
+The following section explains how to use the MessageMediaMessages library in a new console project.
+
+### 1. Starting a new project
+
+For starting a new project, right click on the current solution from the *solution explorer* and choose  ``` Add -> New Project ```.
+
+![Add a new project in the existing solution using Visual Studio](https://apidocs.io/illustration/cs?step=addProject&workspaceFolder=MessageMediaMessages-CSharp&workspaceName=MessageMediaMessages&projectName=MessageMediaMessages.Standard)
+
+Next, choose "Console Application", provide a ``` TestConsoleProject ``` as the project name and click ``` OK ```.
+
+![Create a new console project using Visual Studio](https://apidocs.io/illustration/cs?step=createProject&workspaceFolder=MessageMediaMessages-CSharp&workspaceName=MessageMediaMessages&projectName=MessageMediaMessages.Standard)
+
+### 2. Set as startup project
+
+The new console project is the entry point for the eventual execution. This requires us to set the ``` TestConsoleProject ``` as the start-up project. To do this, right-click on the  ``` TestConsoleProject ``` and choose  ``` Set as StartUp Project ``` form the context menu.
+
+![Set the new cosole project as the start up project](https://apidocs.io/illustration/cs?step=setStartup&workspaceFolder=MessageMediaMessages-CSharp&workspaceName=MessageMediaMessages&projectName=MessageMediaMessages.Standard)
+
+### 3. Add reference of the library project
+
+In order to use the MessageMediaMessages library in the new project, first we must add a projet reference to the ``` TestConsoleProject ```. First, right click on the ``` References ``` node in the *solution explorer* and click ``` Add Reference... ```.
+
+![Open references of the TestConsoleProject](https://apidocs.io/illustration/cs?step=addReference&workspaceFolder=MessageMediaMessages-CSharp&workspaceName=MessageMediaMessages&projectName=MessageMediaMessages.Standard)
+
+Next, a window will be displayed where we must set the ``` checkbox ``` on ``` MessageMediaMessages.Standard ``` and click ``` OK ```. By doing this, we have added a reference of the ```MessageMediaMessages.Standard``` project into the new ``` TestConsoleProject ```.
+
+![Add a reference to the TestConsoleProject](https://apidocs.io/illustration/cs?step=createReference&workspaceFolder=MessageMediaMessages-CSharp&workspaceName=MessageMediaMessages&projectName=MessageMediaMessages.Standard)
+
+### 4. Write sample code
+
+Once the ``` TestConsoleProject ``` is created, a file named ``` Program.cs ``` will be visible in the *solution explorer* with an empty ``` Main ``` method. This is the entry point for the execution of the entire solution.
+Here, you can add code to initialize the client library and acquire the instance of a *Controller* class. Sample code to initialize the client library and using controller methods is given in the subsequent sections.
+
+![Add a reference to the TestConsoleProject](https://apidocs.io/illustration/cs?step=addCode&workspaceFolder=MessageMediaMessages-CSharp&workspaceName=MessageMediaMessages&projectName=MessageMediaMessages.Standard)
+
+## Initialization
+
+API client can be initialized as following.
+
+```csharp
+
+MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+```
+
+### Singleton Controllers
+
+
+* [MessagesController](#messages_controller)
+* [DeliveryReportsController](#delivery_reports_controller)
+* [RepliesController](#replies_controller)
+
+In this version of the SDK there are three "controllers" which are invoked as singletons which control the various actions. For example: the singleton instance of the ``` MessagesController ``` class can be accessed from the API Client.
+
+```csharp
+MessagesController messages = client.Messages;
+```
 ### Send an SMS
 Destination numbers (`destination_number`) should be in the [E.164](http://en.wikipedia.org/wiki/E.164) format. For example, `+61491570156`.
+
 ```csharp
 using System;
 using MessageMedia.Messages;
-using MessageMedia.Messages.Controllers;
 using MessageMedia.Messages.Models;
+using MessageMedia.Messages.Exceptions;
+using MessageMedia.Messages.Controllers;
+using System.Collections.Generic;
 
-namespace TestCSharpSDK
+namespace TestConosleApp
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // Configure your credentials (Note, these can be pulled from the environment variables as well)
-            String basicAuthUserName = "YOUR_API_KEY";
-            String basicAuthPassword = "YOUR_API_SECRET";
-            bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
-            
-            // Instantiate the client
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
-            IMessagesController messages = client.Messages;
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
 
-            // Perform API call
-            string bodyValue = @"{
-                                   ""messages"":[
-                                      {
-                                         ""content"":""Greetings from MessageMedia!"",
-                                         ""destination_number"":""YOUR_MOBILE_NUMBER""
-                                      }
-                                   ]
-                                }";
+            MessagesController messages = client.Messages;
 
-            var body = Newtonsoft.Json.JsonConvert.DeserializeObject<MessageMedia.Messages.Models.SendMessagesRequest>(bodyValue);
 
-            MessageMedia.Messages.Models.SendMessagesResponse result = messages.CreateSendMessages(body);
-            Console.WriteLine(result.Messages);
-            Console.ReadKey();
+            SendMessagesRequest body = new SendMessagesRequest();
+            body.Messages = new List<Message>();
+
+            Message body_messages_0 = new Message();
+            body_messages_0.Content = "Hello world!";
+            body_messages_0.DestinationNumber = "+614<number>";
+            body.Messages.Add(body_messages_0);
+
+
+            try
+            {
+                Models.SendMessagesResponse result = messages.SendMessagesAsync(body).Result;
+                Console.WriteLine(result);
+            }
+            catch (APIException e)
+            {
+                Console.WriteLine(e.Message + e.ResponseCode + e.HttpContext.ToString());
+            };
         }
     }
 }
@@ -116,43 +177,50 @@ namespace TestCSharpSDK
 
 ### Send an MMS
 Destination numbers (`destination_number`) should be in the [E.164](http://en.wikipedia.org/wiki/E.164) format. For example, `+61491570156`.
+
 ```csharp
 using System;
-using System.Linq;
 using MessageMedia.Messages;
-using MessageMedia.Messages.Controllers;
 using MessageMedia.Messages.Models;
+using MessageMedia.Messages.Exceptions;
+using MessageMedia.Messages.Controllers;
+using System.Collections.Generic;
 
-namespace TestCSharpSDK
+namespace TestConsoleApp
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // Configure your credentials (Note, these can be pulled from the environment variables as well)
-            String basicAuthUserName = "YOUR_API_KEY";
-            String basicAuthPassword = "YOUR_API_SECRET";
-            bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
 
-            // Instantiate the client
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
-            IMessagesController messages = client.Messages;
+            MessagesController messages = client.Messages;
 
-            // Perform API call
-            string bodyValue = @"{
-                                   ""messages"":[
-                                      {
-                                         ""content"":""Greetings from MessageMedia!"",
-                                         ""destination_number"":""YOUR_MOBILE_NUMBER"",
-                                         ""format"":""MMS"",
-                                         ""subject"":""This is an MMS message"",
-                                         ""media"":[""https://upload.wikimedia.org/wikipedia/commons/6/6a/L80385-flash-superhero-logo-1544.png""]
-                                      }
-                                   ]
-                                }";
-             var body = Newtonsoft.Json.JsonConvert.DeserializeObject<MessageMedia.Messages.Models.SendMessagesRequest>(bodyValue);
-             MessageMedia.Messages.Models.SendMessagesResponse result = messages.CreateSendMessages(body);
-            Console.WriteLine(result.Messages);
+
+            SendMessagesRequest body = new SendMessagesRequest();
+            body.Messages = new List<Message>();
+
+            Message body_messages_0 = new Message();
+            body_messages_0.Content = "Hello world!";
+            body_messages_0.DestinationNumber = "+614<number>";
+            body_messages_0.Format = FormatEnum.MMS;
+            body_messages_0.Subject = "This is an MMS message";
+            body_messages_0.Media = new List<string>()
+        {
+            "https://upload.wikimedia.org/wikipedia/commons/6/6a/L80385-flash-superhero-logo-1544.png"
+        };
+            body.Messages.Add(body_messages_0);
+
+
+            try
+            {
+                dynamic result = messages.SendMessagesAsync(body).Result;
+                Console.WriteLine(result);
+            }
+            catch (APIException e)
+            {
+                Console.WriteLine(e.Message + e.ResponseCode + e.HttpContext.ToString());
+            };
         }
     }
 }
@@ -160,32 +228,61 @@ namespace TestCSharpSDK
 
 ### Get Status of a Message
 You can get a messsage ID from a sent message by looking at the `message_id` from the response of the above example.
+
+string messageId = "messageId";
+
 ```csharp
 using System;
 using MessageMedia.Messages;
-using MessageMedia.Messages.Controllers;
 using MessageMedia.Messages.Models;
+using MessageMedia.Messages.Exceptions;
+using MessageMedia.Messages.Controllers;
+using System.Collections.Generic;
 
-namespace TestCSharpSDK
+namespace TestConosleApp
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // Configure your credentials (Note, these can be pulled from the environment variables as well)
-            String basicAuthUserName = "YOUR_API_KEY";
-            String basicAuthPassword = "YOUR_API_SECRET";
-            bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
-            
-            // Instantiate the client
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
-            IMessagesController messages = client.Messages;
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
 
-            string messageId = "YOUR_MESSAGE_ID";
-            dynamic result = messages.GetMessageStatus(messageId);
+            MessagesController messages = client.Messages;
 
-            string msg = Newtonsoft.Json.JsonConvert.SerializeObject(result);
-            Console.WriteLine(msg);
+
+            SendMessagesRequest body = new SendMessagesRequest();
+            body.Messages = new List<Message>();
+
+            Message body_messages_0 = new Message();
+            body_messages_0.Content = "Hello world!";
+            body_messages_0.DestinationNumber = "+614<number>";
+            body_messages_0.Format = FormatEnum.MMS;
+            body_messages_0.Subject = "This is an MMS message";
+            body_messages_0.Media = new List<string>()
+        {
+            "https://upload.wikimedia.org/wikipedia/commons/6/6a/L80385-flash-superhero-logo-1544.png"
+        };
+            body.Messages.Add(body_messages_0);
+
+
+            try
+            {
+                dynamic result = messages.SendMessagesAsync(body).Result;
+
+                string msgs = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+                Console.WriteLine(msgs);
+               
+                Guid messageId = result.Messages[0].MessageId;
+
+                dynamic result2 = messages.GetMessageStatus(messageId + "");
+
+                string msg = Newtonsoft.Json.JsonConvert.SerializeObject(result2);
+                Console.WriteLine(msg);
+            }
+            catch (APIException e)
+            {
+                Console.WriteLine(e.Message + e.ResponseCode + e.HttpContext.ToString());
+            };
         }
     }
 }
@@ -193,31 +290,44 @@ namespace TestCSharpSDK
 
 ### Get replies to a message
 You can check for replies that are sent to your messages
+
+
+The singleton instance of the ``` RepliesController ``` class can be accessed from the API Client.
+
 ```csharp
 using System;
 using MessageMedia.Messages;
-using MessageMedia.Messages.Controllers;
 using MessageMedia.Messages.Models;
+using MessageMedia.Messages.Exceptions;
+using MessageMedia.Messages.Controllers;
+using System.Collections.Generic;
 
-namespace TestCSharpSDK
+namespace TestConsoleApp
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // Configure your credentials (Note, these can be pulled from the environment variables as well)
-            String basicAuthUserName = "YOUR_API_KEY";
-            String basicAuthPassword = "YOUR_API_SECRET";
-            bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
-            
-            // Instantiate the client
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
-            IRepliesController replies = client.Replies;
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
 
-            MessageMedia.Messages.Models.CheckRepliesResponse result = replies.GetCheckReplies();
+            MessagesController messages = client.Messages;
 
-            string msg = Newtonsoft.Json.JsonConvert.SerializeObject(result);
-            Console.WriteLine(msg);
+            RepliesController replies = client.Replies;
+
+            try
+            {
+                dynamic result = replies.CheckReplies();
+
+                string msgs = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+                Console.WriteLine(msgs);
+
+
+            }
+            catch (APIException e)
+            {
+                Console.WriteLine(e.Message + e.ResponseCode + e.HttpContext.ToString());
+            };
+
         }
     }
 }
@@ -225,31 +335,43 @@ namespace TestCSharpSDK
 
 ### Check Delivery Reports
 This endpoint allows you to check for delivery reports to inbound and outbound messages.
+
 ```csharp
 using System;
 using MessageMedia.Messages;
-using MessageMedia.Messages.Controllers;
 using MessageMedia.Messages.Models;
+using MessageMedia.Messages.Exceptions;
+using MessageMedia.Messages.Controllers;
+using System.Collections.Generic;
 
-namespace TestCSharpSDK
+namespace TestConsoleApp
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // Configure your credentials (Note, these can be pulled from the environment variables as well)
-            String basicAuthUserName = "YOUR_API_KEY";
-            String basicAuthPassword = "YOUR_API_SECRET";
-            bool useHmacAuthentication = false; //Change this to true if you are using HMAC keys
-            
-            // Instantiate the client
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient(basicAuthUserName, basicAuthPassword, useHmacAuthentication);
-            IDeliveryReportsController deliveryReports = client.DeliveryReports;
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
 
-            MessageMedia.Messages.Models.CheckDeliveryReportsResponse result = deliveryReports.GetCheckDeliveryReports();
+            MessagesController messages = client.Messages;
 
-            string msg = Newtonsoft.Json.JsonConvert.SerializeObject(result);
-            Console.WriteLine(msg);
+            RepliesController replies = client.Replies;
+
+            DeliveryReportsController deliveryReports = client.DeliveryReports;
+
+
+            try
+            {
+                dynamic result = deliveryReports.CheckDeliveryReports();
+
+                string msgs = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+                Console.WriteLine(msgs);
+
+            }
+            catch (APIException e)
+            {
+                Console.WriteLine(e.Message + e.ResponseCode + e.HttpContext.ToString());
+            };
+
         }
     }
 }
