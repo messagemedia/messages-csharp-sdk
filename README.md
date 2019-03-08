@@ -1,7 +1,7 @@
 # MessageMedia Messages C# SDK
 [![Travis Build Status](https://api.travis-ci.org/messagemedia/messages-csharp-sdk.svg?branch=master)](https://travis-ci.org/messagemedia/messages-csharp-sdk)
 [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
-[![NuGet version](https://badge.fury.io/nu/MessageMedia.SDK.Messages.svg)](https://badge.fury.io/nu/MessageMediaDev.SDK.Messages)
+[![NuGet version](https://badge.fury.io/nu/MessageMediaDev.SDK.Messages.svg)](https://badge.fury.io/nu/MessageMediaDev.SDK.Messages)
 
 The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications. In v 2.0, the SDK is now .NET compatible and available as a standard solution library.
 
