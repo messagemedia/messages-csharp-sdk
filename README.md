@@ -149,7 +149,10 @@ namespace TestConosleApp
     {
         static void Main(string[] args)
         {
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+            String API_KEY = "your api key";
+            String API_SECRET = "your api secret";
+            boolean HMAC = false;
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient(API_KEY, API_SECRET, HMAC);
 
             MessagesController messages = client.Messages;
 
@@ -194,7 +197,10 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+            String API_KEY = "your api key";
+            String API_SECRET = "your api secret";
+            boolean HMAC = false;
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient(API_KEY, API_SECRET, HMAC);
 
             MessagesController messages = client.Messages;
 
@@ -247,7 +253,10 @@ namespace TestConosleApp
     {
         static void Main(string[] args)
         {
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+            String API_KEY = "your api key";
+            String API_SECRET = "your api secret";
+            boolean HMAC = false;
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient(API_KEY, API_SECRET, HMAC);
 
             MessagesController messages = client.Messages;
 
@@ -310,7 +319,10 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+            String API_KEY = "your api key";
+            String API_SECRET = "your api secret";
+            boolean HMAC = false;
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient(API_KEY, API_SECRET, HMAC);
 
             MessagesController messages = client.Messages;
 
@@ -352,7 +364,10 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+            String API_KEY = "your api key";
+            String API_SECRET = "your api secret";
+            boolean HMAC = false;
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient(API_KEY, API_SECRET, HMAC);
 
             MessagesController messages = client.Messages;
 
@@ -396,7 +411,10 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+            String API_KEY = "your api key";
+            String API_SECRET = "your api secret";
+            boolean HMAC = false;
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient(API_KEY, API_SECRET, HMAC);
             DeliveryReportsController deliveryReports = client.DeliveryReports;
             
             ConfirmDeliveryReportsAsReceivedRequest body = new ConfirmDeliveryReportsAsReceivedRequest();
@@ -432,7 +450,10 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
-            MessageMediaMessagesClient client = new MessageMediaMessagesClient();
+            String API_KEY = "your api key";
+            String API_SECRET = "your api secret";
+            boolean HMAC = false;
+            MessageMediaMessagesClient client = new MessageMediaMessagesClient(API_KEY, API_SECRET, HMAC);
             MessagesController messages = client.Messages;
             
             try 
