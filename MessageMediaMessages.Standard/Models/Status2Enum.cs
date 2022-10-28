@@ -23,6 +23,7 @@ namespace MessageMedia.Messages.Models
         EXPIRED, //TODO: Write general description for this method
         REJECTED, //TODO: Write general description for this method
         UNDELIVERABLE, //TODO: Write general description for this method
+        HELD
     }
 
     /// <summary>
@@ -31,7 +32,7 @@ namespace MessageMedia.Messages.Models
     public static class Status2EnumHelper
     {
         //string values corresponding the enum elements
-        private static List<string> stringValues = new List<string> { "enroute", "failed", "submitted", "delivered", "expired", "rejected", "undeliverable" };
+        private static List<string> stringValues = new List<string> { "enroute", "failed", "submitted", "delivered", "expired", "rejected", "undeliverable", "held" };
 
         /// <summary>
         /// Converts a Status2Enum value to a corresponding string value
@@ -51,6 +52,7 @@ namespace MessageMedia.Messages.Models
                 case Status2Enum.EXPIRED:
                 case Status2Enum.REJECTED:
                 case Status2Enum.UNDELIVERABLE:
+                case Status2Enum.HELD:    
                     return stringValues[(int)enumValue];
 
                 //an invalid enum value was requested
