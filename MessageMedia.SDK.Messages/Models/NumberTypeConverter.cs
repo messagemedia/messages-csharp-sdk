@@ -17,8 +17,7 @@ namespace MessageMedia.Messages.Models
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            NumberType numberType = (NumberType)value;
-            if (numberType != NumberType.NONE)
+            if (value != null)
             {
                 _stringEnumConverter.WriteJson(writer, value, serializer);
             }

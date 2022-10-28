@@ -89,6 +89,6 @@ namespace MessageMedia.Messages.Models
         /// </summary>
         [JsonProperty("source_number_type", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(NumberTypeConverter))]
-        public NumberType SourceNumberType { get; set; }
+        public NumberType? SourceNumberType { get; set; }
     }
 }
