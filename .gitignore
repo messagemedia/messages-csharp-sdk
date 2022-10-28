@@ -216,3 +216,6 @@ FakesAssemblies/
 
 # Signing Keys
 *.snk
+
+# IntelliJ
+.idea/
