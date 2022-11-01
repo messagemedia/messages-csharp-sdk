@@ -11,6 +11,7 @@
 *.userosscache
 *.sln.docstates
 *.VC.*
+*.sln
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -219,3 +220,5 @@ FakesAssemblies/
 
 # IntelliJ
 .idea/
+MessageMediaMessages.sln
+
