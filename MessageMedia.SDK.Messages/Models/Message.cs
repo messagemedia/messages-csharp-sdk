@@ -88,7 +88,7 @@ namespace MessageMedia.Messages.Models
         /// Type of source address specified
         /// </summary>
         [JsonProperty("source_number_type", NullValueHandling = NullValueHandling.Ignore)]
-        [JsonConverter(typeof(StringEnumConverter))]
-        public NumberType SourceNumberType { get; set; }
+        [JsonConverter(typeof(NumberTypeConverter))]
+        public NumberType? SourceNumberType { get; set; }
     }
 }
