@@ -1,10 +1,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageMediaMessages.Standard", "MessageMediaMessages.Standard\MessageMediaMessages.Standard.csproj", "{8DDF5753-8E70-443E-A88A-F36DCE4A3A80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageMediaMessages.Standard", "MessageMediaMessages.Standard\MessageMediaMessages.Standard.csproj", "{8DDF5753-8E70-443E-A88A-F36DCE4A3A80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageMedia.SDK.Messages", "MessageMedia.SDK.Messages\MessageMedia.SDK.Messages.csproj", "{904399A0-B720-4C4A-90DB-73614BFF38EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageMedia.SDK.Messages", "MessageMedia.SDK.Messages\MessageMedia.SDK.Messages.csproj", "{904399A0-B720-4C4A-90DB-73614BFF38EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageMediaMessages.Tests", "MessageMediaMessages.Tests\MessageMediaMessages.Tests.csproj", "{9EF0C641-B526-4481-8E12-AD9A0D0680DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,8 +22,15 @@ Global
 		{904399A0-B720-4C4A-90DB-73614BFF38EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{904399A0-B720-4C4A-90DB-73614BFF38EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{904399A0-B720-4C4A-90DB-73614BFF38EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EF0C641-B526-4481-8E12-AD9A0D0680DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EF0C641-B526-4481-8E12-AD9A0D0680DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EF0C641-B526-4481-8E12-AD9A0D0680DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EF0C641-B526-4481-8E12-AD9A0D0680DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {724B2E7D-3C3C-47C3-9F56-F30EC7BE9CCB}
 	EndGlobalSection
 EndGlobal
