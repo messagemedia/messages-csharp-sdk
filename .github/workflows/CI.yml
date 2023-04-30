@@ -32,6 +32,13 @@ jobs:
 
       - name: Pack
         run: dotnet pack -p:PackageId=MessageMedia.SDK.Messages --output ./nupkg MessageMediaMessages.sln
+        
+      - name: Upload Nuget Package
+        uses: actions/upload-artifact@v3
+        with:
+          name: Nuget Package
+          path: /home/runner/work/messages-csharp-sdk/messages-csharp-sdk/nupkg/MessageMedia.SDK.Messages.2.0.1.nupkg
+          retention-days: 5
 
 
   deploy:
