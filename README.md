@@ -7,7 +7,6 @@ The MessageMedia Messages API provides a number of endpoints for building powerf
 
 ![Isometric](https://i.imgur.com/jJeHwf5.png)
 
-
 ## Table of Contents
 * [Authentication](#closed_lock_with_key-authentication)
 * [Errors](#interrobang-errors)
