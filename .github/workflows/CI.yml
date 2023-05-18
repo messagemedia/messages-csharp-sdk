@@ -1,0 +1,82 @@
+name: messages-csharp-sdk-build
+on:
+  push:
+    branches: [ '*' ]
+    tags: [ '*' ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Clean the repo
+        run: dotnet clean
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+
+      - name: Pack
+        run: dotnet pack -p:PackageId=MessageMedia.SDK.Messages --output ./nupkg MessageMediaMessages.sln
+        
+      - name: Upload Nuget Package
+        uses: actions/upload-artifact@v3
+        with:
+          name: Nuget Package
+          path: /home/runner/work/messages-csharp-sdk/messages-csharp-sdk/nupkg/MessageMedia.SDK.Messages.2.0.1.nupkg
+          retention-days: 5
+
+
+  deploy:
+    name: Deploy
+    if: success() && github.ref_type == 'tag'
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Clean the repo
+        run: dotnet clean
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      # The expression strips off the shortest match from the front of the string to yield just the tag name as the output
+      - name: Get tagged version
+        run: echo "GITHUB_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: sendgrid/dx-automator/actions/release@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+
+      - name: Pack
+        run: dotnet pack -p:PackageId=MessageMedia.SDK.Messages --output ./nupkg MessageMediaMessages.sln
+
+      - name: Publish NuGet package
+        run: dotnet nuget push /home/runner/work/messages-csharp-sdk/messages-csharp-sdk/nupkg/MessageMedia.SDK.Messages.2.0.1.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
