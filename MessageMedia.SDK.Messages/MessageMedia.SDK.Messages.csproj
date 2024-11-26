@@ -32,7 +32,7 @@
 
   <ItemGroup>
     <PackageReference Include="APIMATIC.SDK.Common" Version="2.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
 </Project>
